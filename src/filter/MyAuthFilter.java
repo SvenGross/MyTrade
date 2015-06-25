@@ -7,6 +7,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
+import model.KonstantenSession;
+
 /**
  * Es werden hier alle *.xhtml Seiten geprüft.
  * Einige sind offen für alle (siehe Methode istOeffentlicheSeite());
@@ -20,7 +22,6 @@ import javax.servlet.http.*;
 public class MyAuthFilter implements Filter {
 
 	boolean debug = true;
-	public static final String benutzer = "angemeldeterBenutzer";
 	
 	private void debugOut(String meldung) {
 		if(debug) {
@@ -95,7 +96,7 @@ public class MyAuthFilter implements Filter {
 			return;
 		}
 
-		Object user = holeSessionVariable(request).getAttribute(benutzer);
+		Object user = holeSessionVariable(request).getAttribute(KonstantenSession.ANGEMELDETER_BENUTZER);
 		if(null == user && istOeffentlicheSeite(request)) {
 			debugOut("eigenerDoHTTPFilter(): Request ist freie Seite");
 			chain.doFilter(request, response); // jeder, da öffentlich	
