@@ -20,11 +20,14 @@ import javax.servlet.http.*;
 public class MyAuthFilter implements Filter {
 
 	boolean debug = true;
+	public static final String benutzer = "angemeldeterBenutzer";
+	
 	private void debugOut(String meldung) {
 		if(debug) {
 			System.out.println("Debug MyAuthFilter." + meldung);
 		}
 	}
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		debugOut("init(): AuthFilter...");
@@ -92,7 +95,7 @@ public class MyAuthFilter implements Filter {
 			return;
 		}
 
-		Object user = holeSessionVariable(request).getAttribute("angemeldeterBenutzer");
+		Object user = holeSessionVariable(request).getAttribute(benutzer);
 		if(null == user && istOeffentlicheSeite(request)) {
 			debugOut("eigenerDoHTTPFilter(): Request ist freie Seite");
 			chain.doFilter(request, response); // jeder, da öffentlich	
