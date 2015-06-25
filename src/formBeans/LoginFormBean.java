@@ -26,7 +26,7 @@ public class LoginFormBean {
 		if (benutzerID != null){
 			
 			benutzerInDieSessionMap(benutzerDAO.getUserDataByID(benutzerID));
-			
+			System.out.println("angemeldet");
 			return "administration?faces-redirect=true";
 			
 		} else {

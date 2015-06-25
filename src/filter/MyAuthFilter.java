@@ -92,7 +92,7 @@ public class MyAuthFilter implements Filter {
 			return;
 		}
 
-		Object user = holeSessionVariable(request).getAttribute("user");
+		Object user = holeSessionVariable(request).getAttribute("angemeldeterBenutzer");
 		if(null == user && istOeffentlicheSeite(request)) {
 			debugOut("eigenerDoHTTPFilter(): Request ist freie Seite");
 			chain.doFilter(request, response); // jeder, da öffentlich	
