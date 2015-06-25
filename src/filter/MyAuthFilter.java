@@ -48,7 +48,7 @@ public class MyAuthFilter implements Filter {
 	}
 
 
-	String loginUrl = "/JSF_Login/faces/login.xhtml";
+	String loginUrl = "login.xhtml";
 
 	boolean istLoginURL(HttpServletRequest request) {
 		String reqString = request.getRequestURI();
