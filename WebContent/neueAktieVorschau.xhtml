@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Aktie erfassen</title>
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/default.css" />
+</h:head>
+<h:body>
+	<h:form>
+		<div id="header">
+			<div id="portfolio">
+				<h:outputLink value="portfolio?faces-redirect=true">Portfolio</h:outputLink>
+			</div>
+			<div id="auftrage">
+				<h:outputLink value="offeneAuftrage?faces-redirect=true">Aufträge</h:outputLink>
+			</div>
+			<div id="admin">
+				<h:outputLink value="administration?faces-redirect=true">Administration</h:outputLink>
+			</div>
+			<div id="user">User</div>
+		</div>
+
+		<div id="meldungen"></div>
+
+		<div id="inhalt">
+			<div id="container">
+				<div id="second_titel">
+					<h2>Werte überprüfen</h2>
+				</div>
+
+				<div id="form">
+					<h:form>
+						<div class="label labelwidth_130">
+							<h:outputText value="Name"></h:outputText>
+						</div>
+						<div class="feld">
+							<h:inputText value="#{aktieErfassenFormBean.neueAktie.name}"></h:inputText>
+						</div>
+
+						<div class="label labelwidth_130 top_35">
+							<h:outputText value="Kürzel"></h:outputText>
+						</div>
+						<div class="feld top_35">
+							<h:inputSecret value="#{aktieErfassenFormBean.neueAktie.kuerzel}"></h:inputSecret>
+						</div>
+
+						<div class="label labelwidth_130 top_65">
+							<h:outputText value="Nominalpreis (CHF)"></h:outputText>
+						</div>
+						<div class="feld top_65">
+							<h:inputSecret value="#{aktieErfassenFormBean.neueAktie.preis}"></h:inputSecret>
+						</div>
+
+						<div class="label labelwidth_130 top_95">
+							<h:outputText value="Dividende"></h:outputText>
+						</div>
+						<div class="feld top_95">
+							<h:inputSecret value="#{aktieErfassenFormBean.neueAktie.dividende}"></h:inputSecret>
+						</div>
+
+						<div class="label labelwidth_130 top_125">
+							<h:outputText value="Stückzahl"></h:outputText>
+						</div>
+						<div class="feld top_125">
+							<h:inputSecret value="#{aktieErfassenFormBean.neueAktie.stueck}"></h:inputSecret>
+						</div>
+
+						<div id="zurueckButton" class="button top_155">
+							<h:commandButton value="Zurück"
+								action="#{aktieErfassenFormBean.neueAktie.back()}"></h:commandButton>
+						</div>
+						<div id="okButton" class="button top_155">
+							<h:commandButton value="OK"
+								action="#{aktieErfassenFormBean.neueAktie.save()}"></h:commandButton>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>

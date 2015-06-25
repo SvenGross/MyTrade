@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Benutzer erfassen</title>
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/default.css" />
+</h:head>
+<h:body>
+	<h:form>
+		<div id="header">
+			<div id="portfolio">
+				<h:outputLink value="portfolio?faces-redirect=true">Portfolio</h:outputLink>
+			</div>
+			<div id="auftrage">
+				<h:outputLink value="offeneAuftrage?faces-redirect=true">Aufträge</h:outputLink>
+			</div>
+			<div id="admin">
+				<h:outputLink value="administration?faces-redirect=true">Administration</h:outputLink>
+			</div>
+			<div id="user">User</div>
+		</div>
+
+		<div id="meldungen"></div>
+
+		<div id="inhalt">
+			<div id="container">
+				<div id="second_titel">
+					<h2>Benutzer erfassen</h2>
+				</div>
+
+				<div id="form">
+					<h:form>
+						<div class="label labelwidth_130">
+							<h:outputText value="Name"></h:outputText>
+						</div>
+						<div class="feld">
+							<h:inputText value="#{benutzerErfassenFormBean.name}"></h:inputText>
+						</div>
+
+						<div class="label labelwidth_130 top_35">
+							<h:outputText value="Vorname"></h:outputText>
+						</div>
+						<div class="feld top_35">
+							<h:inputSecret value="#{benutzerErfassenFormBean.vorname}"></h:inputSecret>
+						</div>
+
+						<div class="label labelwidth_130 top_65">
+							<h:outputText value="Login"></h:outputText>
+						</div>
+						<div class="feld top_65">
+							<h:inputSecret value="#{benutzerErfassenFormBean.login}"></h:inputSecret>
+						</div>
+
+						<div class="label labelwidth_130 top_95">
+							<h:outputText value="Passwort"></h:outputText>
+						</div>
+						<div class="feld top_95">
+							<h:inputSecret value="#{benutzerErfassenFormBean.passwort}"></h:inputSecret>
+						</div>
+
+						<div class="label labelwidth_130 top_125">
+							<h:outputText value="Rolle"></h:outputText>
+						</div>
+						<div class="feld top_125">
+							<h:selectOneMenu value="#{benutzerErfassenFormBean.rolle}">
+								<f:selectItem itemValue="Administrator" itemLabel="Administrator" />
+								<f:selectItem itemValue="Haendler" itemLabel="Händler" />
+							</h:selectOneMenu>
+						</div>
+
+						<div id="zurueckButton" class="button top_155">
+							<h:commandButton value="Zurück"
+								action="#{benutzerErfassenFormBean.back()}"></h:commandButton>
+						</div>
+						<div id="okButton" class="button top_155">
+							<h:commandButton value="OK"
+								action="#{benutzerErfassenFormBean.save()}"></h:commandButton>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>

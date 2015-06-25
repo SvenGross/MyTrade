@@ -1,0 +1,227 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+}
+
+.label {
+	position: absolute;
+	text-align: right;
+	height: 25px;
+}
+
+.feld {
+	width: 150px;
+	height: 25px;
+	left: 170px;
+	position: absolute;
+}
+
+.button {
+	width: 85px;
+	height: 25px;
+	position: absolute;
+}
+
+.labelwidth_100 {
+	width: 100px;
+}
+
+.labelwidth_130 {
+	width: 130px;
+}
+
+.labelwidth_180 {
+	width: 180px;
+}
+
+.top_35 {
+	top: 35px;
+}
+
+.top_65 {
+	top: 65px;
+}
+
+.top_95 {
+	top: 95px;
+}
+
+.top_125 {
+	top: 125px;
+}
+
+.top_155 {
+	top: 155px;
+}
+
+.table {
+	width: 100%;
+}
+
+/**************************** 
+* Settings für das Menüband *
+*                           *
+*****************************/
+#header {
+	position: relative;
+	/* 	background-color: yellow; */
+	width: 100%;
+	height: 50px;
+}
+
+#portfolio {
+	position: absolute;
+	width: 25%;
+	left: 0%;
+	height: 100%;
+}
+
+#auftrage {
+	position: absolute;
+	width: 25%;
+	left: 25%;
+	height: 100%;
+}
+
+#admin {
+	position: absolute;
+	width: 25%;
+	left: 50%;
+	height: 100%;
+}
+
+#user {
+	position: absolute;
+	width: 25%;
+	left: 75%;
+	height: 100%;
+}
+
+/****************************** 
+* Settings für die Hauptboxen * 
+* Inhalt und Meldungen        *
+*                             *
+******************************/
+#meldungen {
+	/* 	background-color: green; */
+	width: 100%;
+	min-height: 0px;
+}
+
+#inhalt {
+	/* 	background-color: red; */
+	width: 100%;
+	height: 500px;
+	position: absolute;
+}
+
+/******************************** 
+* Settings für den ersten Titel *
+*                               *
+********************************/
+#haupt_titel {
+	text-align: center;
+	width: 150px;
+	height: 50px;
+	margin: 0px auto;
+}
+
+/************************************* 
+* Settings für die Box in der Mitte, *
+* die den ganzen Inhalt enthält      *
+*                                    *
+*************************************/
+#container {
+	margin: 0 auto;
+	width: 400px;
+	height: 150px;
+	/* 	background-color: blue; */
+}
+
+/********************************* 
+* Settings für den zweiten Titel *
+*                                *
+*********************************/
+#second_titel {
+	position: relative;
+	text-align: center;
+	left: calc(50% - 75px);
+	width: 150px;
+	height: 50px;
+	/* 	background-color: yellow; */
+}
+
+/**************************** 
+* Settings für das Formular *
+*                           *
+*****************************/
+#form {
+	/* 	background-color: green; */
+	width: 450px;
+	height: 175px;
+	position: relative;
+	margin: 0 auto;
+	padding: 5px;
+}
+
+/********************************** 
+* Settings für die Seite "Login" *
+*                                 *
+**********************************/
+#login_button {
+	left: 235px;
+}
+
+/***************************************** 
+* Settings für die Seite "aktieErfassen" *
+*                                        *
+*****************************************/
+#zurueckButton {
+	left: 210px;
+}
+
+#okButton {
+	left: 278px;
+}
+
+/******************************************* 
+* Settings für die Seite "auftragErfassen" *
+*                                          *
+*******************************************/
+#auE_name {
+	left: 170px;
+}
+
+/******************************************* 
+* Settings für die Seite "offeneAuftrage"  *
+*                                          *
+*******************************************/
+#konto {
+	width: 500px;
+	height: 50px;
+	position: relative;
+	left: 2.5%;
+	/* 	background-color: yellow; */
+}
+
+#auftragsListe {
+	width: 95%;
+	height: 70%;
+	position: relative;
+	margin: 0px auto;
+	/* 	background-color: green; */
+}
+
+#guthaben {
+	left: 170px;
+}

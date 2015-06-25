@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Administration</title>
+	<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
+</h:head>
+<h:body>
+	<h:form>
+		<div id="header">
+			<div id="portfolio">
+				<h:outputLink value="portfolio?faces-redirect=true">Portfolio</h:outputLink>
+			</div>
+			<div id="auftrage">
+				<h:outputLink value="offeneAuftrage?faces-redirect=true">Aufträge</h:outputLink>
+			</div>
+			<div id="admin">
+				<h:outputLink value="administration?faces-redirect=true">Administration</h:outputLink>
+			</div>
+			<div id="user">
+				User
+			</div>
+		</div>
+
+		<div id="meldungen">
+		</div>
+
+		<div id="inhalt">
+			<h:outputLink value="#{administrationFormBean.aktieErfassen()}">Aktie erfassen</h:outputLink> 
+			<br />
+			<h:outputLink value="#{administrationFormBean.benutzerErfassen()}">Benutzer erfassen</h:outputLink>
+			<br />
+			<h:outputLink value="#{administrationFormBean.dividendeAusschuetten()}">Dividende ausschütten</h:outputLink>
+		</div>
+	</h:form>
+</h:body>
+</html>
