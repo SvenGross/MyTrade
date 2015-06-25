@@ -23,7 +23,7 @@ public class MyTradeConnectionPool {
 	private List<Connection> freePool;
 	private List<Connection> busyPool;
 	private String treiberName   = "com.mysql.jdbc.Driver";
-	private String connectionURL = "jdbc:mysql://192.168.56.1/mytrade";
+	private String connectionURL = "jdbc:mysql://192.168.1.81/mytrade";
 	private String username      = "mytrade";
 	private String password      = "mytrade";
 	
