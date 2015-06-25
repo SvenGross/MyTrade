@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import model.Benutzer;
 
@@ -109,6 +110,44 @@ public class BenutzerDAO extends MyTradeDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public ArrayList<Benutzer> getAllUsers() {
+
+		ArrayList<Benutzer> alleBenutzer = null;
+		
+		try {
+			
+			alleBenutzer = new ArrayList<Benutzer>();
+			
+			con = getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT userID, firstname, lastname, username, password, administrator, account_balance FROM users");
+			
+			while(rs.next()) {
+				
+				int benutzerID        = rs.getInt("userID");
+				String vorname        = rs.getString("firstname");
+				String nachname       = rs.getString("lastname");
+				String benutzername   = rs.getString("username");
+				String passwort       = rs.getString("password");
+				boolean administrator = rs.getBoolean("administrator");
+				double kontostand     = rs.getDouble("account_balance");
+				
+				Benutzer benutzer = new Benutzer(benutzerID, vorname, nachname, benutzername, passwort, administrator, kontostand);
+				alleBenutzer.add(benutzer);
+				
+			}
+			
+			return alleBenutzer;
+			
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getAllUsers' aufgetreten.");
+			e.printStackTrace();
+		}
+		
+		return alleBenutzer;
+		
 	}
 	
 }
