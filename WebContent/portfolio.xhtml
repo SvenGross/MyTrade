@@ -13,18 +13,7 @@
 </h:head>
 <h:body>
 	<h:form>
-		<div id="header">
-			<div id="portfolio">
-				<h:outputLink value="portfolio?faces-redirect=true">Portfolio</h:outputLink>
-			</div>
-			<div id="auftrage">
-				<h:outputLink value="offeneAuftrage?faces-redirect=true">Aufträge</h:outputLink>
-			</div>
-			<div id="admin">
-				<h:outputLink value="administration?faces-redirect=true">Administration</h:outputLink>
-			</div>
-			<div id="user">User</div>
-		</div>
+		<ui:include src="facelet_elemente/navigation.xhtml"/>
 
 		<div id="meldungen"></div>
 
