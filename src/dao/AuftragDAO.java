@@ -17,8 +17,7 @@ public class AuftragDAO extends MyTradeDAO {
 //		try {
 //
 //			stmt = con.createStatement();
-//			rs = stmt
-//					.executeQuery("SELECT userID, firstname, lastname, username, administrator, account_balance FROM users WHERE username = '"
+//			rs = stmt.executeQuery("SELECT userID, firstname, lastname, username, administrator, account_balance FROM users WHERE username = '"
 //							+ benutzername
 //							+ "' AND password = SHA1('"
 //							+ passwort + "')");

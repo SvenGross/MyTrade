@@ -49,7 +49,7 @@ public class MyTradeConnectionPool {
 	 */
 	public static synchronized MyTradeConnectionPool getInstance(int minConnections, int maxConnections) {
 		
-		if(null == thePool) {
+		if(thePool == null) {
 			
 			try {
 				thePool = new MyTradeConnectionPool(minConnections, maxConnections);
