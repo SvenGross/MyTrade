@@ -36,8 +36,7 @@ public class AuftragDAO extends MyTradeDAO {
 //			}
 //
 //		} catch (Exception e) {
-//			System.err
-//					.println("dao.LoginDAO     : Die SQL-Abfrage konnte nicht ausgeführt werden.");
+//			System.err.println("dao.LoginDAO     : Die SQL-Abfrage konnte nicht ausgeführt werden.");
 //			e.printStackTrace();
 //		}
 	}
