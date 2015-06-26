@@ -93,6 +93,8 @@ public class Benutzer {
 	}
 
 	public double getKontostand() {
+		BenutzerDAO benutzerDAO = new BenutzerDAO();
+		kontostand = benutzerDAO.getKontostand(getBenutzerIDAsInt());
 		return kontostand;
 	}
 

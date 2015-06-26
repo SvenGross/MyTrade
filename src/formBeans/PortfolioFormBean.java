@@ -42,17 +42,8 @@ public class PortfolioFormBean {
 	}
 
 	public double getKontostand() {
-		
 		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
-		benutzer.getKontostand();
-		
-		
-		
-		
-		
-		
-		
-		return kontostand;
+		return benutzer.getKontostand();
 	}
 
 	public void setKontostandn(double kontostand) {

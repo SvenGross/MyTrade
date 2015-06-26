@@ -19,13 +19,15 @@ public class BenutzerDAO extends MyTradeDAO {
 	
 	public Integer logindatenPruefen(String benutzername, String passwort) {
 		
+		Integer benutzerID = null;
+		
 		try {
 			
 			con = getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("SELECT userID FROM users WHERE username = '" + benutzername + "' AND password = SHA1('" + passwort + "')");
 			
-			Integer benutzerID = null;
+			benutzerID = null;
 			int count = 0;
 			
 			//Überprüft ob nur genau 1 Benutzer mit den Credentials vorhanden ist, andernfalls Datenbank inkonsestent oder SQLInjection
@@ -42,7 +44,7 @@ public class BenutzerDAO extends MyTradeDAO {
 				
 			}
 			
-			return benutzerID;
+			rs.close();
 			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'logindatenPruefen' aufgetreten.");
@@ -50,7 +52,7 @@ public class BenutzerDAO extends MyTradeDAO {
 		}
 		
 		returnConnection(con);
-		return null;
+		return benutzerID;
 		
 	}
 	
@@ -78,6 +80,8 @@ public class BenutzerDAO extends MyTradeDAO {
 				return benutzer;
 				
 			}
+			
+			rs.close();
 			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
@@ -112,6 +116,8 @@ public class BenutzerDAO extends MyTradeDAO {
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'benutzerSpeichern' aufgetreten.");
 			e.printStackTrace();
+			
+			returnConnection(con);
 			return false;
 		}
 	}
@@ -143,6 +149,8 @@ public class BenutzerDAO extends MyTradeDAO {
 				
 			}
 			
+			rs.close();
+			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getAllUsers' aufgetreten.");
 			e.printStackTrace();
@@ -166,6 +174,8 @@ public class BenutzerDAO extends MyTradeDAO {
 			while(rs.next()) {
 				kontostand = rs.getDouble("account_balance");
 			}
+			
+			rs.close();
 			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
