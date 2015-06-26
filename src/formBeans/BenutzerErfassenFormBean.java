@@ -23,7 +23,7 @@ public class BenutzerErfassenFormBean {
 		setAdministrator();
 		Benutzer benutzer = new Benutzer(name, vorname, login, passwort, administrator, kontostand);
 		BenutzerDAO benutzerDAO = new BenutzerDAO();
-		if (benutzerDAO.benutzerSpeichern(benutzer)){
+		if (benutzerDAO.benutzerHinzufuegen(benutzer)){
 			//gib message successful
 		} else{
 			//same same but different

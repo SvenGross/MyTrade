@@ -89,11 +89,10 @@ public class BenutzerDAO extends MyTradeDAO {
 		
 	}
 	
-	public boolean benutzerSpeichern(Benutzer benutzer) {
+	public boolean benutzerHinzufuegen(Benutzer benutzer) {
 		
 		try {
 			
-			String benutzerID     = benutzer.getBenutzerID();
 			String vorname        = benutzer.getVorname();
 			String nachname       = benutzer.getNachname();
 			String benutzername   = benutzer.getBenutzername();
@@ -104,14 +103,8 @@ public class BenutzerDAO extends MyTradeDAO {
 			con = getConnection();
 			stmt = con.createStatement();
 			
-			if(benutzerID.isEmpty()) {
-				stmt.execute("INSERT INTO users (firstname, lastname, username, password, administrator, account_balance) "
-						+ "VALUES ('" + vorname + "', '" + nachname + "', '" + benutzername + "', SHA1('" + passwort + "'), '" + administrator + "', " + kontostand + ")");
-			}
-			else {
-				stmt.executeUpdate("UPDATE users SET firstname = '" + vorname + "', lastname = '" + nachname + "', username = '" + benutzername + "', "
-						+ "password = SHA1('" + passwort + "'), administrator = '" + administrator + "', account_balance = '" + kontostand + "'");
-			}
+			stmt.execute("INSERT INTO users (firstname, lastname, username, password, administrator, account_balance) "
+					+ "VALUES ('" + vorname + "', '" + nachname + "', '" + benutzername + "', SHA1('" + passwort + "'), '" + administrator + "', " + kontostand + ")");
 			
 			returnConnection(con);
 			return true;

@@ -100,9 +100,4 @@ public class Benutzer {
 		this.kontostand = kontostand;
 	}
 	
-	public void benutzerSpeichern() {
-		BenutzerDAO benutzerDAO = new BenutzerDAO();
-		benutzerDAO.benutzerSpeichern(this);
-	}
-	
 }
