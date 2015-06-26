@@ -16,14 +16,8 @@ import model.KonstantenSession;
 @SessionScoped
 public class OffeneAuftrageFormBean {
 
-	private Map<String, Object> sessionMap = null;
 	private ArrayList<Auftrag> auftragsListe;
 	
-	public OffeneAuftrageFormBean() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		sessionMap = externalContext.getSessionMap();
-	}
-
 	public ArrayList<Auftrag> getAuftragsListe() {
 		return auftragsListe;
 	}
@@ -33,6 +27,8 @@ public class OffeneAuftrageFormBean {
 	}
 
 	public double getKontostand() {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
 		return benutzer.getKontostand();
 	}

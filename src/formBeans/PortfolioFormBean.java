@@ -11,21 +11,14 @@ import javax.faces.context.FacesContext;
 import model.Aktie;
 import model.Benutzer;
 import model.KonstantenSession;
-import dao.BenutzerDAO;
 
 
 @ManagedBean
 @SessionScoped
 public class PortfolioFormBean {
 
-	private Map<String, Object> sessionMap = null;
 	private double kontostand;
 	private ArrayList<Aktie> aktienListe;
-	
-	public PortfolioFormBean() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		sessionMap = externalContext.getSessionMap();
-	}
 	
 	public void verkaufen(){
 	
@@ -42,6 +35,8 @@ public class PortfolioFormBean {
 	}
 
 	public double getKontostand() {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
 		return benutzer.getKontostand();
 	}

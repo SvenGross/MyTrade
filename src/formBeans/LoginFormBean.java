@@ -23,18 +23,23 @@ public class LoginFormBean {
 		BenutzerDAO benutzerDAO = new BenutzerDAO();
 		benutzerID = benutzerDAO.logindatenPruefen(benutzername, passwort);
 		
-		if (benutzerID != null){
+		if(benutzerID != null) {
 			
 			benutzerInDieSessionMap(benutzerDAO.getUserDataByID(benutzerID));
 			
-			if (benutzerDAO.getUserDataByID(benutzerID).isAdministrator())
+			if(benutzerDAO.getUserDataByID(benutzerID).isAdministrator())
 			{
+
+				System.err.println("BENUTZERDAO administration");
 				return "administration.xhtml";
 			}
 			else 
 			{
+
+				System.err.println("BENUTZERDAO portfolio");
 				return "portfolio.xhtml";
 			}
+		
 		} else {
 			
 			return "login.xhtml";
