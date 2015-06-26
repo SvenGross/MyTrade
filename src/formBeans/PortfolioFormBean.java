@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import dao.AktieDAO;
 import model.Aktie;
 import model.Benutzer;
 import model.KonstantenSession;
@@ -19,7 +20,6 @@ import model.KonstantenSession;
 public class PortfolioFormBean {
 
 	private Map<String, Object> sessionMap = null;
-	private ArrayList<Aktie> aktienListe;
 	
 	public PortfolioFormBean() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -33,7 +33,8 @@ public class PortfolioFormBean {
 	}
 	
 	public ArrayList<Aktie> getAktienListe() {
-		return aktienListe;
+		AktieDAO aktieDAO = new AktieDAO();
+		return aktieDAO.getAlleAktienVonBenutzer();
 	}
 
 	public String getKontostand() {

@@ -29,14 +29,10 @@ public class LoginFormBean {
 			
 			if(benutzerDAO.getUserDataByID(benutzerID).isAdministrator())
 			{
-
-				System.err.println("BENUTZERDAO administration");
 				return "administration?faces-redirect=true";
 			}
 			else 
 			{
-
-				System.err.println("BENUTZERDAO portfolio");
 				return "portfolio?faces-redirect=true";
 			}
 		

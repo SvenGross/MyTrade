@@ -3,13 +3,15 @@ package dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import model.Aktie;
 import model.Benutzer;
+import model.KonstantenSession;
 
 public class AktieDAO extends MyTradeDAO {
 
@@ -17,19 +19,13 @@ public class AktieDAO extends MyTradeDAO {
 	Statement stmt;
 	ResultSet rs = null;
 
-	public void selectAlleAktien() {
+	public ArrayList<Aktie> getAlleAktienVonBenutzer() {
 
-		con = getConnection();
-	}
-
-	public LinkedHashMap<String, String> selectAlleAktienVonBenutzer() {
-
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
-		int benutzerID = ((Benutzer) sessionMap.get("angemeldeterBenutzer")).getBenutzerIDAsInt();
+		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
 		
-		LinkedHashMap<String, String> alleAktien = new LinkedHashMap<String, String>();
+		ArrayList<Aktie> alleAktien = new ArrayList<Aktie>();
 		con = getConnection();
 
 		try {
@@ -41,16 +37,20 @@ public class AktieDAO extends MyTradeDAO {
 
 			while (rs.next()) {
 				String aktienName = rs.getString("name");
-				alleAktien.put(aktienName, aktienName);
+				Aktie aktie = new Aktie(aktienName, "", 0, 0, 1);
+				alleAktien.add(aktie);
 			}
 			
+			rs.close();
+			stmt.close();
 			returnConnection(con);
+			return alleAktien;
 
 		} catch (Exception e) {
-			System.err.println("dao.AktieDAO     : Die SQL-Abfrage konnte nicht ausgeführt werden.");
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAlleAktienVonBenutzer' aufgetreten.");
 			e.printStackTrace();
+			returnConnection(con);
+			return null;
 		}
-		
-		return alleAktien;
 	}
 }
