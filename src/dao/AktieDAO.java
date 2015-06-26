@@ -17,7 +17,7 @@ public class AktieDAO extends MyTradeDAO {
 	Statement stmt;
 	ResultSet rs = null;
 
-	public void selectAllAktien() {
+	public void selectAlleAktien() {
 
 		con = getConnection();
 	}
@@ -35,9 +35,9 @@ public class AktieDAO extends MyTradeDAO {
 		try {
 
 			stmt = con.createStatement();
-			rs = stmt.executeQuery("SELECT name FROM stock_data "
-					+ "WHERE stockID = " + "(Select stockFK From stock_pool "
-					+ "Where stock_pool.ownerFK = " + benutzerID + ");");
+			rs = stmt.executeQuery("SELECT stock_data.name FROM stock_data "
+					+ "INNER JOIN stock_pool ON stock_pool.stockFK = stock_data.stockID "
+					+ "WHERE stock_pool.ownerFK = '" + benutzerID + "'");
 
 			while (rs.next()) {
 				String aktienName = rs.getString("name");
@@ -45,8 +45,7 @@ public class AktieDAO extends MyTradeDAO {
 			}
 
 		} catch (Exception e) {
-			System.err
-					.println("dao.AktieDAO     : Die SQL-Abfrage konnte nicht ausgeführt werden.");
+			System.err.println("dao.AktieDAO     : Die SQL-Abfrage konnte nicht ausgeführt werden.");
 			e.printStackTrace();
 		}
 		

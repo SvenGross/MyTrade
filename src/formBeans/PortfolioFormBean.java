@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import model.Aktie;
+import dao.BenutzerDAO;
 
 
 @ManagedBean
@@ -14,17 +15,12 @@ public class PortfolioFormBean {
 
 	private double guthaben;
 	private ArrayList<Aktie> aktienListe;
-
-	
 	
 	public void verkaufen(){
 	
 		//sell some stocks bitch
 		
 	}
-	
-	
-	
 	
 	public ArrayList<Aktie> getAuftragsListe() {
 		return aktienListe;
@@ -35,13 +31,12 @@ public class PortfolioFormBean {
 	}
 
 	public double getGuthaben() {
-		return guthaben;
+		BenutzerDAO benutzerDAO = new BenutzerDAO();
+		benutzerDAO.getKontostand(userID)
 	}
 
 	public void setGuthaben(double guthaben) {
 		this.guthaben = guthaben;
 	}
-	
-	
 	
 }
