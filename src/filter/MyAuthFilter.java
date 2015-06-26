@@ -105,10 +105,19 @@ public class MyAuthFilter implements Filter {
 		}
 
 		Benutzer angemeldeterBenutzer = (Benutzer) holeSessionVariable(request).getAttribute(KonstantenSession.ANGEMELDETER_BENUTZER);
-		if(istAdministrationSeite(request) && angemeldeterBenutzer.isAdministrator()) {
+		if(istAdministrationSeite(request) && null != angemeldeterBenutzer ) {
+			
 			debugOut("eigenerDoHTTPFilter(): Request ist die Administrations Seite");
-			response.sendRedirect(loginUrl);	
-			return;
+			
+			if(angemeldeterBenutzer.isAdministrator()) {
+				chain.doFilter(request, response);
+				return;
+			}
+			else {
+				response.sendRedirect(loginUrl);
+				return;
+		}
+			
 		}
 		
 		if(null == user) { // hier aber keine freie Seite
