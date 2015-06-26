@@ -21,4 +21,9 @@ public class MyTradeDAO {
 		
 	}
 	
+	public void returnConnection(Connection con) {
+		MyTradeConnectionPool conPool = MyTradeConnectionPool.getInstance(1, 5);
+		conPool.putConnection(con);
+	}
+	
 }

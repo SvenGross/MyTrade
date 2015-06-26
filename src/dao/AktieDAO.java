@@ -49,6 +49,7 @@ public class AktieDAO extends MyTradeDAO {
 			e.printStackTrace();
 		}
 		
+		returnConnection(con);
 		return alleAktien;
 	}
 }
