@@ -18,8 +18,14 @@ import dao.BenutzerDAO;
 @SessionScoped
 public class PortfolioFormBean {
 
+	private Map<String, Object> sessionMap = null;
 	private double kontostand;
 	private ArrayList<Aktie> aktienListe;
+	
+	public PortfolioFormBean() {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		sessionMap = externalContext.getSessionMap();
+	}
 	
 	public void verkaufen(){
 	
@@ -36,15 +42,9 @@ public class PortfolioFormBean {
 	}
 
 	public double getKontostand() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		Map<String, Object> sessionMap = externalContext.getSessionMap();
-		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
-		BenutzerDAO benutzerDAO = new BenutzerDAO();
-		double kontostand = benutzerDAO.getKontostand(benutzer.getBenutzerID());
 		
-		System.out.println("KontostandSession vorher" + benutzer.getKontostand());
-
-		benutzer.setKontostand(kontostand);
+		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
+		benutzer.getKontostand();
 		
 		
 		
