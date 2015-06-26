@@ -27,7 +27,7 @@ public class AktieDAO extends MyTradeDAO {
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
-		int benutzerID = ((Benutzer) sessionMap.get("angemeldeterBenutzer")).getBenutzerID();
+		int benutzerID = ((Benutzer) sessionMap.get("angemeldeterBenutzer")).getBenutzerIDAsInt();
 		
 		LinkedHashMap<String, String> alleAktien = new LinkedHashMap<String, String>();
 		con = getConnection();
@@ -43,13 +43,14 @@ public class AktieDAO extends MyTradeDAO {
 				String aktienName = rs.getString("name");
 				alleAktien.put(aktienName, aktienName);
 			}
+			
+			returnConnection(con);
 
 		} catch (Exception e) {
 			System.err.println("dao.AktieDAO     : Die SQL-Abfrage konnte nicht ausgeführt werden.");
 			e.printStackTrace();
 		}
 		
-		returnConnection(con);
 		return alleAktien;
 	}
 }

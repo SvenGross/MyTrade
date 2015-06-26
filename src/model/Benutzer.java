@@ -1,8 +1,10 @@
 package model;
 
+import dao.BenutzerDAO;
+
 public class Benutzer {
 
-	private int benutzerID;
+	private String benutzerID = null;
 	private String vorname;
 	private String nachname;
 	private String benutzername;
@@ -21,7 +23,7 @@ public class Benutzer {
 		
 	}
 	
-	public Benutzer(int benutzerID, String vorname, String nachname, String benutzername, String passwort, boolean administrator, double kontostand) {
+	public Benutzer(String benutzerID, String vorname, String nachname, String benutzername, String passwort, boolean administrator, double kontostand) {
 		
 		this.benutzerID = benutzerID;
 		this.vorname = vorname;
@@ -33,12 +35,21 @@ public class Benutzer {
 		
 	}
 
-	public int getBenutzerID() {
+	public String getBenutzerID() {
 		return benutzerID;
 	}
 	
-	public void setBenutzerID(int userID) {
-		this.benutzerID = userID;
+	public void setBenutzerID(String benutzerID) {
+		this.benutzerID = benutzerID;
+	}
+
+	public int getBenutzerIDAsInt() {
+		if(benutzerID.isEmpty()) {
+			return 0;
+		}
+		else {
+			return Integer.parseInt(benutzerID);
+		}
 	}
 
 	public String getVorname() {
@@ -87,6 +98,11 @@ public class Benutzer {
 
 	public void setKontostand(double kontostand) {
 		this.kontostand = kontostand;
+	}
+	
+	public void benutzerSpeichern() {
+		BenutzerDAO benutzerDAO = new BenutzerDAO();
+		benutzerDAO.benutzerSpeichern(this);
 	}
 	
 }

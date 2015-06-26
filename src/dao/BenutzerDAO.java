@@ -66,7 +66,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			
 			while(rs.next()) {
 				
-				int benutzerID        = rs.getInt("userID");
+				String benutzerID     = rs.getString("userID");
 				String vorname        = rs.getString("firstname");
 				String nachname       = rs.getString("lastname");
 				String benutzername   = rs.getString("username");
@@ -89,10 +89,11 @@ public class BenutzerDAO extends MyTradeDAO {
 		
 	}
 	
-	public boolean benutzerHinzufuegen(Benutzer benutzer) {
+	public boolean benutzerSpeichern(Benutzer benutzer) {
 		
 		try {
 			
+			String benutzerID     = benutzer.getBenutzerID();
 			String vorname        = benutzer.getVorname();
 			String nachname       = benutzer.getNachname();
 			String benutzername   = benutzer.getBenutzername();
@@ -102,16 +103,24 @@ public class BenutzerDAO extends MyTradeDAO {
 			
 			con = getConnection();
 			stmt = con.createStatement();
-			stmt.execute("INSERT INTO users (firstname, lastname, username, password, administrator, account_balance) " +
-				"VALUES ('" + vorname + "', '" + nachname + "', '" + benutzername + "', SHA1('" + passwort + "'), '" + administrator + "', " + kontostand + ")");
 			
+			if(benutzerID.isEmpty()) {
+				stmt.execute("INSERT INTO users (firstname, lastname, username, password, administrator, account_balance) "
+						+ "VALUES ('" + vorname + "', '" + nachname + "', '" + benutzername + "', SHA1('" + passwort + "'), '" + administrator + "', " + kontostand + ")");
+			}
+			else {
+				stmt.executeUpdate("UPDATE users SET firstname = '" + vorname + "', lastname = '" + nachname + "', username = '" + benutzername + "', "
+						+ "password = SHA1('" + passwort + "'), administrator = '" + administrator + "', account_balance = '" + kontostand + "'");
+			}
+			
+			returnConnection(con);
 			return true;
 			
 		} catch (Exception e) {
-			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'benutzerHinzufuegen' aufgetreten.");
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'benutzerSpeichern' aufgetreten.");
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 	
 	public ArrayList<Benutzer> getAllUsers() {
@@ -128,7 +137,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			
 			while(rs.next()) {
 				
-				int benutzerID        = rs.getInt("userID");
+				String benutzerID     = rs.getString("userID");
 				String vorname        = rs.getString("firstname");
 				String nachname       = rs.getString("lastname");
 				String benutzername   = rs.getString("username");
@@ -140,8 +149,6 @@ public class BenutzerDAO extends MyTradeDAO {
 				alleBenutzer.add(benutzer);
 				
 			}
-			
-			return alleBenutzer;
 			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getAllUsers' aufgetreten.");
