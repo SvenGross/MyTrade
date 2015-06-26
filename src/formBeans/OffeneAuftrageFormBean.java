@@ -14,8 +14,6 @@ public class OffeneAuftrageFormBean {
 	private double guthaben;
 	private ArrayList<Auftrag> auftragsListe;
 
-	
-	
 	public ArrayList<Auftrag> getAuftragsListe() {
 		return auftragsListe;
 	}
@@ -31,10 +29,5 @@ public class OffeneAuftrageFormBean {
 	public void setGuthaben(double guthaben) {
 		this.guthaben = guthaben;
 	}
-	
-	
-	
-	
-	
 	
 }

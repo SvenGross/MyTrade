@@ -150,4 +150,27 @@ public class BenutzerDAO extends MyTradeDAO {
 		
 	}
 	
+	public double getKontostand(int userID) {
+
+		double kontostand = 0;
+		
+		try {
+			
+			con = getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT account_balance FROM users WHERE userID = '" + userID + "'");
+			
+			while(rs.next()) {
+				kontostand = rs.getDouble("account_balance");
+			}
+			
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
+			e.printStackTrace();
+		}
+		
+		return kontostand;
+		
+	}
+	
 }
