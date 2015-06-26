@@ -7,8 +7,8 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class AdministrationFormBean {
 
-	public String aktieErfassen() {	return "aktieErfassen?faces-redirect=true"; }
-	public String benutzerErfassen() {	return "benutzerErfassen?faces-redirect=true"; }
+	public String aktieErfassen() {	return "aktieErfassen.xhtml"; }
+	public String benutzerErfassen() {	return "benutzerErfassen.xhtml"; }
 	public String dividendeAusschuetten() {
 		return null;	//TODO
 	}

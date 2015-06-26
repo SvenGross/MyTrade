@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
+import model.Benutzer;
 import model.KonstantenSession;
 
 /**
@@ -99,10 +100,17 @@ public class MyAuthFilter implements Filter {
 		Object user = holeSessionVariable(request).getAttribute(KonstantenSession.ANGEMELDETER_BENUTZER);
 		if(null == user && istOeffentlicheSeite(request)) {
 			debugOut("eigenerDoHTTPFilter(): Request ist freie Seite");
-			chain.doFilter(request, response); // jeder, da Ã¶ffentlich	
+			chain.doFilter(request, response); // jeder, da öffentlich	
 			return;
 		}
 
+		Benutzer angemeldeterBenutzer = (Benutzer) holeSessionVariable(request).getAttribute(KonstantenSession.ANGEMELDETER_BENUTZER);
+		if(istAdministrationSeite(request) && angemeldeterBenutzer.isAdministrator()) {
+			debugOut("eigenerDoHTTPFilter(): Request ist die Administrations Seite");
+			response.sendRedirect(loginUrl);	
+			return;
+		}
+		
 		if(null == user) { // hier aber keine freie Seite
 			debugOut("eigenerDoHTTPFilter(): user ist null, aber nicht freie Seite!");	
 			response.sendRedirect(loginUrl);
@@ -142,6 +150,12 @@ public class MyAuthFilter implements Filter {
 		} else {
 			response.sendRedirect(loginUrl);
 		}
+	}
+	
+	private boolean istAdministrationSeite(HttpServletRequest request) {
+		
+		String reqString = request.getRequestURI();
+		return reqString.contains("administration.xhtml");		
 	}
 
 

@@ -26,13 +26,30 @@ public class LoginFormBean {
 		if (benutzerID != null){
 			
 			benutzerInDieSessionMap(benutzerDAO.getUserDataByID(benutzerID));
-			return "administration?faces-redirect=true";
 			
+			if (benutzerDAO.getUserDataByID(benutzerID).isAdministrator())
+			{
+				return "administration.xhtml";
+			}
+			else 
+			{
+				return "portfolio.xhtml";
+			}
 		} else {
 			
-			return "login?faces-redirect=true";
+			return "login.xhtml";
 		}
 
+	}
+	
+	public String abmelden() {
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		Map<String, Object> sessionMap = externalContext.getSessionMap();
+		
+		sessionMap.remove("angemeldeterBenutzer");
+		return "login?faces-redirect=true";
 	}
 
 	private void benutzerInDieSessionMap(Benutzer angemeldeterBenutzer) {

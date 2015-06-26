@@ -14,18 +14,13 @@ public class PortfolioFormBean {
 
 	private double guthaben;
 	private ArrayList<Aktie> aktienListe;
-
-	
 	
 	public void verkaufen(){
 	
 		//sell some stocks bitch
 		
 	}
-	
-	
-	
-	
+		
 	public ArrayList<Aktie> getAuftragsListe() {
 		return aktienListe;
 	}
@@ -40,8 +35,5 @@ public class PortfolioFormBean {
 
 	public void setGuthaben(double guthaben) {
 		this.guthaben = guthaben;
-	}
-	
-	
-	
+	}	
 }
