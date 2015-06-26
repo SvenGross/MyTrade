@@ -12,7 +12,7 @@ public class AuftragDAO extends MyTradeDAO {
 
 	public void saveAuftrag(String name, double preis, int stueck) {
 
-		con = getConnection();
+		//con = getConnection();
 
 //		try {
 //

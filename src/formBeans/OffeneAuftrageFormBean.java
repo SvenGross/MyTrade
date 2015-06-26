@@ -1,5 +1,6 @@
 package formBeans;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -16,21 +17,21 @@ import model.KonstantenSession;
 @SessionScoped
 public class OffeneAuftrageFormBean {
 
+	private Map<String, Object> sessionMap = null;
 	private ArrayList<Auftrag> auftragsListe;
 	
+	public OffeneAuftrageFormBean() {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		sessionMap = externalContext.getSessionMap();
+	}
+
 	public ArrayList<Auftrag> getAuftragsListe() {
 		return auftragsListe;
 	}
 
-	public void setAuftragsListe(ArrayList<Auftrag> auftragsListe) {
-		this.auftragsListe = auftragsListe;
-	}
-
-	public double getKontostand() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		Map<String, Object> sessionMap = externalContext.getSessionMap();
+	public String getKontostand() {
 		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
-		return benutzer.getKontostand();
+		return new DecimalFormat("#.00").format(benutzer.getKontostand());
 	}
 	
 }

@@ -1,5 +1,6 @@
 package formBeans;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -17,8 +18,13 @@ import model.KonstantenSession;
 @SessionScoped
 public class PortfolioFormBean {
 
-	private double kontostand;
+	private Map<String, Object> sessionMap = null;
 	private ArrayList<Aktie> aktienListe;
+	
+	public PortfolioFormBean() {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		sessionMap = externalContext.getSessionMap();
+	}
 	
 	public void verkaufen(){
 	
@@ -26,23 +32,13 @@ public class PortfolioFormBean {
 		
 	}
 	
-	public ArrayList<Aktie> getAuftragsListe() {
+	public ArrayList<Aktie> getAktienListe() {
 		return aktienListe;
 	}
 
-	public void setAuftragsListe(ArrayList<Aktie> auftragsListe) {
-		this.aktienListe = auftragsListe;
-	}
-
-	public double getKontostand() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		Map<String, Object> sessionMap = externalContext.getSessionMap();
+	public String getKontostand() {
 		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
-		return benutzer.getKontostand();
-	}
-
-	public void setKontostandn(double kontostand) {
-		this.kontostand = kontostand;
+		return new DecimalFormat("#.00").format(benutzer.getKontostand());
 	}
 	
 }

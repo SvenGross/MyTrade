@@ -1,5 +1,7 @@
 package model;
 
+import java.text.DecimalFormat;
+
 import dao.BenutzerDAO;
 
 public class Benutzer {
