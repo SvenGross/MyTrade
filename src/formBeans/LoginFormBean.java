@@ -31,18 +31,18 @@ public class LoginFormBean {
 			{
 
 				System.err.println("BENUTZERDAO administration");
-				return "administration.xhtml";
+				return "administration?faces-redirect=true";
 			}
 			else 
 			{
 
 				System.err.println("BENUTZERDAO portfolio");
-				return "portfolio.xhtml";
+				return "portfolio?faces-redirect=true";
 			}
 		
 		} else {
 			
-			return "login.xhtml";
+			return "login?faces-redirect=true";
 		}
 	}
 	
