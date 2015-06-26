@@ -105,19 +105,33 @@ public class MyAuthFilter implements Filter {
 		}
 
 		Benutzer angemeldeterBenutzer = (Benutzer) holeSessionVariable(request).getAttribute(KonstantenSession.ANGEMELDETER_BENUTZER);
-		if(istAdministrationSeite(request) && null != angemeldeterBenutzer ) {
-			
-			debugOut("eigenerDoHTTPFilter(): Request ist die Administrations Seite");
+		if(null != angemeldeterBenutzer ) {
 			
 			if(angemeldeterBenutzer.isAdministrator()) {
-				chain.doFilter(request, response);
-				return;
+				
+				debugOut("Ist admin");
+				
+				if(istAdministrationSeite(request)) {
+					debugOut("eigenerDoHTTPFilter(): Request ist eine Admin Seite");
+					chain.doFilter(request, response);
+					return;
+				}
+				else {
+					response.sendRedirect("administration.xhtml");
+					return;
+				}
 			}
 			else {
-				response.sendRedirect(loginUrl);
-				return;
-		}
-			
+				if(istKundenSeite(request)) {
+					debugOut("eigenerDoHTTPFilter(): Request ist eine Kunden Seite");
+					chain.doFilter(request, response);
+					return;
+				}
+				else {
+					response.sendRedirect("portfolio.xhtml");
+					return;
+				}
+			}
 		}
 		
 		if(null == user) { // hier aber keine freie Seite
@@ -164,7 +178,18 @@ public class MyAuthFilter implements Filter {
 	private boolean istAdministrationSeite(HttpServletRequest request) {
 		
 		String reqString = request.getRequestURI();
-		return reqString.contains("administration.xhtml");		
+		return reqString.contains("administration.xhtml")
+				|| reqString.contains("aktieErfassen.xhtml")
+				|| reqString.contains("benutzerErfassen.xhtml")
+				|| reqString.contains("neueAktieVorschau.xhtml");
+	}
+	
+	private boolean istKundenSeite(HttpServletRequest request) {
+		
+		String reqString = request.getRequestURI();
+		return reqString.contains("portfolio.xhtml")
+				|| reqString.contains("offeneAuftrage.xhtml")
+				|| reqString.contains("auftragErfassen.xhtml");
 	}
 
 

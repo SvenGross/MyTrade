@@ -5,10 +5,10 @@
 <ui:component>
 <div id="header">
 			<div id="portfolio">
-				<h:outputLink value="portfolio.xhtml">Portfolio</h:outputLink>
+				<h:outputLink value="portfolio.xhtml" rendered="${!angemeldeterBenutzer.administrator}">Portfolio</h:outputLink>
 			</div>
 			<div id="auftrage">
-				<h:outputLink value="offeneAuftrage.xhtml">Aufträge</h:outputLink>
+				<h:outputLink value="offeneAuftrage.xhtml" rendered="${!angemeldeterBenutzer.administrator}">Aufträge</h:outputLink>
 			</div>
 			<div id="admin">
 				<h:outputLink value="administration.xhtml" rendered="${angemeldeterBenutzer.administrator}">Administration</h:outputLink>
