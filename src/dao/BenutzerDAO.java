@@ -49,6 +49,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			e.printStackTrace();
 		}
 		
+		returnConnection(con);
 		return null;
 		
 	}
@@ -83,6 +84,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			e.printStackTrace();
 		}
 		
+		returnConnection(con);
 		return benutzer;
 		
 	}
@@ -146,6 +148,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			e.printStackTrace();
 		}
 		
+		returnConnection(con);
 		return alleBenutzer;
 		
 	}
@@ -169,6 +172,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			e.printStackTrace();
 		}
 		
+		returnConnection(con);
 		return kontostand;
 		
 	}
