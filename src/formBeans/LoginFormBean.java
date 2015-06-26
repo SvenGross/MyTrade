@@ -44,12 +44,10 @@ public class LoginFormBean {
 			
 			return "login.xhtml";
 		}
-
 	}
 	
 	public String abmelden() {
 		
-		System.out.println("abmelden");
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 
@@ -66,7 +64,6 @@ public class LoginFormBean {
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		
 		sessionMap.put("angemeldeterBenutzer", angemeldeterBenutzer);
-		
 	}
 
 	public String getUser() {
