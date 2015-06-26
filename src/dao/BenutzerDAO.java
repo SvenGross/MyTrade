@@ -19,15 +19,13 @@ public class BenutzerDAO extends MyTradeDAO {
 	
 	public Integer logindatenPruefen(String benutzername, String passwort) {
 		
-		Integer benutzerID = null;
-		
 		try {
 			
 			con = getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("SELECT userID FROM users WHERE username = '" + benutzername + "' AND password = SHA1('" + passwort + "')");
 			
-			benutzerID = null;
+			Integer benutzerID = null;
 			int count = 0;
 			
 			//Überprüft ob nur genau 1 Benutzer mit den Credentials vorhanden ist, andernfalls Datenbank inkonsestent oder SQLInjection
@@ -36,31 +34,36 @@ public class BenutzerDAO extends MyTradeDAO {
 				count++;
 				
 				if (count > 1) {
-					System.out.println("Es gibt mehr als einen Benutzer: " + benutzername);
+					System.err.println("Es gibt mehr als einen Benutzer: " + benutzername);
+					rs.close();
+					stmt.close();
+					returnConnection(con);
 					return null;
 				}
 				
 				benutzerID = rs.getInt("userID");
 				
 			}
-			
+
 			rs.close();
+			stmt.close();
+			returnConnection(con);
+			return benutzerID;
 			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'logindatenPruefen' aufgetreten.");
 			e.printStackTrace();
+			returnConnection(con);
+			return null;
 		}
-		
-		returnConnection(con);
-		return benutzerID;
 		
 	}
 	
 	public Benutzer getUserDataByID(int userID) {
 
-		Benutzer benutzer = null;
-		
 		try {
+			
+			Benutzer benutzer = null;
 			
 			con = getConnection();
 			stmt = con.createStatement();
@@ -82,14 +85,16 @@ public class BenutzerDAO extends MyTradeDAO {
 			}
 			
 			rs.close();
+			stmt.close();
+			returnConnection(con);
+			return benutzer;
 			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
 			e.printStackTrace();
+			returnConnection(con);
+			return null;
 		}
-		
-		returnConnection(con);
-		return benutzer;
 		
 	}
 	
@@ -110,6 +115,8 @@ public class BenutzerDAO extends MyTradeDAO {
 			stmt.execute("INSERT INTO users (firstname, lastname, username, password, administrator, account_balance) "
 					+ "VALUES ('" + vorname + "', '" + nachname + "', '" + benutzername + "', SHA1('" + passwort + "'), '" + administrator + "', " + kontostand + ")");
 			
+			rs.close();
+			stmt.close();
 			returnConnection(con);
 			return true;
 			
@@ -124,11 +131,9 @@ public class BenutzerDAO extends MyTradeDAO {
 	
 	public ArrayList<Benutzer> getAllUsers() {
 
-		ArrayList<Benutzer> alleBenutzer = null;
-		
 		try {
 			
-			alleBenutzer = new ArrayList<Benutzer>();
+			ArrayList<Benutzer> alleBenutzer = new ArrayList<Benutzer>();
 			
 			con = getConnection();
 			stmt = con.createStatement();
@@ -150,22 +155,24 @@ public class BenutzerDAO extends MyTradeDAO {
 			}
 			
 			rs.close();
+			stmt.close();
+			returnConnection(con);
+			return alleBenutzer;
 			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getAllUsers' aufgetreten.");
 			e.printStackTrace();
+			returnConnection(con);
+			return null;
 		}
-		
-		returnConnection(con);
-		return alleBenutzer;
 		
 	}
 	
 	public double getKontostand(int userID) {
 
-		double kontostand = 0;
-		
 		try {
+			
+			double kontostand = 0;
 			
 			con = getConnection();
 			stmt = con.createStatement();
@@ -176,14 +183,16 @@ public class BenutzerDAO extends MyTradeDAO {
 			}
 			
 			rs.close();
+			stmt.close();
+			returnConnection(con);
+			return kontostand;
 			
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
 			e.printStackTrace();
+			returnConnection(con);
+			return 0;
 		}
-		
-		returnConnection(con);
-		return kontostand;
 		
 	}
 	
