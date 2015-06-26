@@ -165,7 +165,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			}
 			
 		} catch (Exception e) {
-			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getKontostand' aufgetreten.");
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
 			e.printStackTrace();
 		}
 		

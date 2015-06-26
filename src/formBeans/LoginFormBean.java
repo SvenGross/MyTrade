@@ -44,11 +44,12 @@ public class LoginFormBean {
 	
 	public String abmelden() {
 		
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
-		
+
 		sessionMap.remove("angemeldeterBenutzer");
+		
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "login?faces-redirect=true";
 	}
 
