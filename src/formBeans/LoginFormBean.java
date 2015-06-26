@@ -44,6 +44,7 @@ public class LoginFormBean {
 	
 	public String abmelden() {
 		
+		System.out.println("abmelden");
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 
