@@ -29,6 +29,8 @@ public class LoginFormBean {
 			
 			if(benutzerDAO.getUserDataByID(benutzerID).isAdministrator())
 			{
+
+				System.err.println("BENUTZERDAO administration");
 				return "administration?faces-redirect=true";
 			}
 			else 
@@ -62,19 +64,19 @@ public class LoginFormBean {
 		sessionMap.put("angemeldeterBenutzer", angemeldeterBenutzer);
 	}
 
-	public String getUser() {
+	public String getBenutzername() {
 		return benutzername;
 	}
 
-	public void setUser(String benutzername) {
+	public void setBenutzername(String benutzername) {
 		this.benutzername = benutzername;
 	}
 
-	public String getPassword() {
+	public String getPasswort() {
 		return passwort;
 	}
 
-	public void setPassword(String passwort) {
+	public void setPasswort(String passwort) {
 		this.passwort = passwort;
 	}
 }
