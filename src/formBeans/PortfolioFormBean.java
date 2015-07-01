@@ -20,6 +20,7 @@ import dao.AktieDAO;
 public class PortfolioFormBean {
 
 	private Map<String, Object> sessionMap = null;
+	private boolean fehler;
 	
 	public PortfolioFormBean() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -43,4 +44,11 @@ public class PortfolioFormBean {
 		return new DecimalFormat("#.00").format(benutzer.getKontostand());
 	}
 	
+	public boolean isFehler() {
+		return fehler;
+	}
+	
+	public void setFehler(boolean fehler) {
+		this.fehler = fehler;
+	}	
 }

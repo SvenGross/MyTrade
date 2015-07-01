@@ -17,6 +17,7 @@ public class BenutzerErfassenFormBean {
 	private String rolle;
 	private boolean administrator;
 	private double kontostand = 10000;
+	private boolean fehler;
 
 	public String save() {
 
@@ -102,5 +103,13 @@ public class BenutzerErfassenFormBean {
 
 	public void setKontostand(double kontostand) {
 		this.kontostand = kontostand;
+	}
+	
+	public boolean isFehler() {
+		return fehler;
+	}
+	
+	public void setFehler(boolean fehler) {
+		this.fehler = fehler;
 	}
 }

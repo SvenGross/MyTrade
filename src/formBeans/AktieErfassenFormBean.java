@@ -10,6 +10,7 @@ import model.Aktie;
 @SessionScoped
 public class AktieErfassenFormBean {
 
+	private boolean fehler = false; 
 	private String 	name;
 	private String 	symbol;
 	private double 	preis;
@@ -97,5 +98,13 @@ public class AktieErfassenFormBean {
 
 	public void setNeueAktie(Aktie neueAktie) {
 		this.neueAktie = neueAktie;
+	}
+	
+	public boolean isFehler() {
+		return fehler;
+	}
+	
+	public void setFehler(boolean fehler) {
+		this.fehler = fehler;
 	}
 }

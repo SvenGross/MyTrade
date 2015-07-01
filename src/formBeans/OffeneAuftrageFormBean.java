@@ -19,6 +19,7 @@ import dao.AuftragDAO;
 public class OffeneAuftrageFormBean {
 
 	private Map<String, Object> sessionMap = null;
+	private boolean fehler;
 	
 	public OffeneAuftrageFormBean() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -41,4 +42,11 @@ public class OffeneAuftrageFormBean {
 		System.out.println(auftragsID);
 	}
 	
+	public boolean isFehler() {
+		return fehler;
+	}
+	
+	public void setFehler(boolean fehler) {
+		this.fehler = fehler;
+	}
 }

@@ -17,6 +17,7 @@ public class AuftragErfassenFormBean {
 	private ArrayList<Aktie> aktienListe;
 	private double preis;
 	private int stueck;
+	private boolean fehler;
 
 	public AuftragErfassenFormBean() {
 	
@@ -64,5 +65,13 @@ public class AuftragErfassenFormBean {
 
 	public void setStueck(int stueck) {
 		this.stueck = stueck;
+	}
+	
+	public boolean isFehler() {
+		return fehler;
+	}
+	
+	public void setFehler(boolean fehler) {
+		this.fehler = fehler;
 	}
 }
