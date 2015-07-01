@@ -24,6 +24,8 @@ public class Meldungen {
 	public static String AUFTRAG_STORNIEREN     = "Der Auftrag wurde erfolgreich storniert: ";
 	
 	//TODO DONE: dividende ausschuetten
+//				 benutzer anlegen
+//				 aktie erstellen
 	
 	
 	public Meldungen() {

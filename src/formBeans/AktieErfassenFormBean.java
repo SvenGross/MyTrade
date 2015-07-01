@@ -1,10 +1,16 @@
 package formBeans;
 
+import java.util.Map;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import dao.AktieDAO;
+import error.Meldungen;
 import model.Aktie;
+import model.KonstantenSession;
 
 @ManagedBean
 @SessionScoped
@@ -43,6 +49,12 @@ public class AktieErfassenFormBean {
 		if (neuesAktienDAO.addAktie(neueAktie)) {
 
 			//Meldung "Aktie erfasst" Hinzufügen!!!!!!
+
+			ExternalContext externalContext = FacesContext.getCurrentInstance()
+					.getExternalContext();
+			Map<String, Object> sessionMap = externalContext.getSessionMap();
+			
+			sessionMap.put(KonstantenSession.FEHLER_MELDUNG, Meldungen.AKTIE_ERSTELLEN);
 			
 			return "administration?faces-redirect=true";
 		}else{
