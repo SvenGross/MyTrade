@@ -2,13 +2,13 @@ package error;
 
 public class Meldungen {
 
-	public static String fehlerMeldung  = "";
+	public String fehlerMeldung  = "";
 
-	public static String getFehlerMeldung() {
+	public String getFehlerMeldung() {
 		return fehlerMeldung;
 	}
 
-	public static void setFehlerMeldung(String fehlerMeldung) {
-		Meldungen.fehlerMeldung = fehlerMeldung;
+	public void setFehlerMeldung(String fehlerMeldung) {
+		this.fehlerMeldung = fehlerMeldung;
 	}
 }

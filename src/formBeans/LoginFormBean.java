@@ -8,6 +8,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import model.Benutzer;
+import model.KonstantenSession;
 import dao.BenutzerDAO;
 
 @ManagedBean
@@ -51,7 +52,7 @@ public class LoginFormBean {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 
-		sessionMap.remove("angemeldeterBenutzer");
+		sessionMap.remove(KonstantenSession.ANGEMELDETER_BENUTZER);
 		
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "login?faces-redirect=true";
@@ -63,7 +64,7 @@ public class LoginFormBean {
 				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		
-		sessionMap.put("angemeldeterBenutzer", angemeldeterBenutzer);
+		sessionMap.put(KonstantenSession.ANGEMELDETER_BENUTZER, angemeldeterBenutzer);
 	}
 
 	public String getBenutzername() {
