@@ -19,26 +19,26 @@
 		<div id="second_titel">
 			<h2>Login</h2>
 		</div>
-
+		
 		<div id="form">
 			<h:form>
 				<div class="label labelwidth_100">
 					<h:outputText value="Benutzername"></h:outputText>
 				</div>
 				<div class="feld">
-					<h:inputText value="#{loginFormBean.user}"></h:inputText>
+					<h:inputText value="#{loginFormBean.benutzername}" />
 				</div>
 
 				<div class="label labelwidth_100 top_35">
 					<h:outputText value="Passwort"></h:outputText>
 				</div>
 				<div class="feld top_35">
-					<h:inputSecret value="#{loginFormBean.password}"></h:inputSecret>
+					<h:inputSecret value="#{loginFormBean.passwort}" />
 				</div>
 
 				<div id="login_button" class="button top_65">
 					<h:commandButton value="Anmelden"
-						action="#{loginFormBean.anmelden()}"></h:commandButton>
+						action="#{loginFormBean.anmelden()}" />
 				</div>
 			</h:form>
 		</div>
