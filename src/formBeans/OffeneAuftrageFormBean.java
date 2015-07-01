@@ -38,8 +38,9 @@ public class OffeneAuftrageFormBean {
 	
 	public void auftragStornieren(int auftragsID) {
 		AuftragDAO auftragDAO = new AuftragDAO();
-		auftragDAO.auftragStornieren(auftragsID);
-		System.out.println(auftragsID);
+		if(!auftragDAO.auftragStornieren(auftragsID)) {
+			fehler = true;
+		}
 	}
 	
 	public boolean isFehler() {
