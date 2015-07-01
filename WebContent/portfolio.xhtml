@@ -15,7 +15,9 @@
 	<h:form>
 		<ui:include src="facelet_elemente/navigation.xhtml"/>
 
-		<ui:include src="facelet_elemente/meldung.xhtml"/>
+		<div id="meldungen">
+			<h:message></h:message>
+		</div>
 
 		<div id="inhalt">
 			<div id="konto">
@@ -23,11 +25,11 @@
 					<h:outputText value="Aktueller Kontostand CHF"></h:outputText>
 				</div>
 				<div id="guthaben" class="label">
-					<h:outputText value="#{portfolioFormBean.kontostand}"></h:outputText>
+					<h:outputText value="#{portfolioFormBean.getKontostand()}"></h:outputText>
 				</div>
 			</div>
 
-			<!--<div id="aktienListe">
+			<div id="aktienListe">
 				<table class="table">
 					<tr>
 						<th>Symbol</th>
@@ -39,16 +41,16 @@
 					<tbody>
 						<ui:repeat var="aktie" value="#{portfolioFormBean.aktienListe}" varStatus="status">
 								<tr>
-									<td>#{aktie.symbol}</td>
-									<td>#{aktie.name}</td>
-									<td>#{aktie.anzahl}</td>
-									<td>#{aktie.dividende}</td>
-									<td><h:outputLink value="#{portfolioFormBean.verkaufen()}">${verkaufen}</h:outputLink></td>
+									<td align="center">#{aktie.symbol}</td>
+									<td align="center">#{aktie.name}</td>
+									<td align="center">#{aktie.stueck}</td>
+									<td align="center">#{aktie.dividende}</td>
+									<td align="left"><h:commandButton value="Verkaufen" action="#{portfolioFormBean.verkaufen()}"></h:commandButton></td>
 								</tr>
 						</ui:repeat>
 					</tbody>
 				</table>
-			</div>-->
+			</div>
 		</div>
 	</h:form>
 </h:body>
