@@ -14,7 +14,9 @@
 	<h:form>
 		<ui:include src="facelet_elemente/navigation.xhtml"/>
 
-		<ui:include src="facelet_elemente/meldung.xhtml"/>
+		<div id="meldungen">
+			<h:outputText id="fehler" value="${meldungen.printFehler()}" />
+		</div>
 
 		<div id="inhalt">
 			<h2>Inhalt</h2>
