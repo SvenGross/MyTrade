@@ -31,13 +31,22 @@ public class AktieDAO extends MyTradeDAO {
 		try {
 
 			stmt = con.createStatement();
-			rs = stmt.executeQuery("SELECT stock_data.name FROM stock_data "
+			rs = stmt.executeQuery("SELECT stock_data.symbol, stock_data.name, stock_data.nominal_price, "
+					+ "stock_data.last_dividend, COUNT(*) AS stock_count "
+					+ "FROM stock_data "
 					+ "INNER JOIN stock_pool ON stock_pool.stockFK = stock_data.stockID "
-					+ "WHERE stock_pool.ownerFK = '" + benutzerID + "'");
+					+ "WHERE stock_pool.ownerFK = '" + benutzerID + "' "
+					+ "GROUP BY stock_data.stockID");
 
 			while (rs.next()) {
 				String aktienName = rs.getString("name");
-				Aktie aktie = new Aktie(aktienName, "", 0, 0, 1);
+				String aktienSymbol = rs.getString("symbol");
+				double aktienPreis = rs.getDouble("nominal_price");
+				double aktienDividende = rs.getDouble("last_dividend");
+				int aktienAnzahl = rs.getInt("stock_count");
+				
+				System.out.println(aktienAnzahl);
+				Aktie aktie = new Aktie(aktienName, aktienSymbol, aktienPreis, aktienDividende, aktienAnzahl);
 				alleAktien.add(aktie);
 			}
 			

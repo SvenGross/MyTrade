@@ -26,7 +26,7 @@ public class PortfolioFormBean {
 		sessionMap = externalContext.getSessionMap();
 	}
 	
-	public void verkaufen(){
+	public void verkaufen() {
 	
 		//sell some stocks bitch
 		

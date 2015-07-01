@@ -1,10 +1,11 @@
 package formBeans;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import model.Aktie;
 import dao.AktieDAO;
 
 @ManagedBean
@@ -12,14 +13,14 @@ import dao.AktieDAO;
 public class AuftragErfassenFormBean {
 
 	private String aktienName;
-	private LinkedHashMap<String, String> aktienListe;
+	private ArrayList<Aktie> aktienListe;
 	private double preis;
 	private int stueck;
 
 	public AuftragErfassenFormBean() {
 	
 		AktieDAO aDAO = new AktieDAO();
-		aktienListe = aDAO.selectAlleAktienVonBenutzer();
+		aktienListe = aDAO.getAlleAktienVonBenutzer();
 	}
 	
 	public String back() {
@@ -40,11 +41,11 @@ public class AuftragErfassenFormBean {
 		this.aktienName = aktienName;
 	}
 
-	public LinkedHashMap<String, String> getAktienListe() {
+	public ArrayList<Aktie> getAktienListe() {
 		return aktienListe;
 	}
 
-	public void setAktienListe(LinkedHashMap<String, String> aktienListe) {
+	public void setAktienListe(ArrayList<Aktie> aktienListe) {
 		this.aktienListe = aktienListe;
 	}
 
