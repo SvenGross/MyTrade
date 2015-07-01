@@ -11,7 +11,7 @@ import model.Aktie;
 public class AktieErfassenFormBean {
 
 	private String 	name;
-	private String 	kuerzel;
+	private String 	symbol;
 	private double 	preis;
 	private double 	dividende;
 	private int		stueck;
@@ -24,7 +24,7 @@ public class AktieErfassenFormBean {
 
 	public String vorschau() {
 
-		neueAktie = new Aktie(name, kuerzel, preis, dividende, stueck);		
+		neueAktie = new Aktie(name, symbol, preis, dividende, stueck);		
 		
 		return "neueAktieVorschau?faces-redirect=true";
 
@@ -59,12 +59,12 @@ public class AktieErfassenFormBean {
 		this.name = name;
 	}
 
-	public String getKuerzel() {
-		return kuerzel;
+	public String getSymbol() {
+		return symbol;
 	}
 
-	public void setKuerzel(String kuerzel) {
-		this.kuerzel = kuerzel;
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 
 	public double getPreis() {
