@@ -15,7 +15,7 @@
 		<ui:include src="facelet_elemente/navigation.xhtml"/>
 
 		<div id="meldungen">
-			<h:outputText value="${Meldungen.fehlerMeldung}" rendered="${administrationFormBean.fehler}"></h:outputText>
+			<h:outputText id="fehler" value="${meldungen.printFehler()}" />
 		</div>
 
 		<div id="inhalt">

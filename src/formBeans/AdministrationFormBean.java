@@ -1,25 +1,26 @@
 package formBeans;
 
+import java.util.Map;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
+import model.KonstantenSession;
 
 @ManagedBean
 @SessionScoped
 public class AdministrationFormBean {
-
-	private boolean fehler = false; 
-
-	public boolean isFehler() {
-		return fehler;
-	}
-	
-	public void setFehler(boolean fehler) {
-		this.fehler = fehler;
-	}
 	
 	public String aktieErfassen() {	return "aktieErfassen.xhtml"; }
 	public String benutzerErfassen() {	return "benutzerErfassen.xhtml"; }
-	public String dividendeAusschuetten() {
-		return null;	//TODO
+	public void dividendeAusschuetten() {
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		Map<String, Object> sessionMap = externalContext.getSessionMap();
+		
+		sessionMap.put(KonstantenSession.FEHLER_MELDUNG, "test");
 	}
 }
