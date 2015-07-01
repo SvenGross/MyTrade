@@ -45,7 +45,7 @@
 									<td align="center">#{aktie.name}</td>
 									<td align="center">#{aktie.stueck}</td>
 									<td align="center">#{aktie.dividende}</td>
-									<td align="left"><h:outputLink value="#{portfolioFormBean.verkaufen()}">${verkaufen}</h:outputLink></td>
+									<td align="left"><h:commandButton value="Verkaufen" action="#{portfolioFormBean.verkaufen()}"></h:commandButton></td>
 								</tr>
 						</ui:repeat>
 					</tbody>

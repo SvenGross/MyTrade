@@ -28,6 +28,7 @@ public class PortfolioFormBean {
 	
 	public void verkaufen() {
 	
+		System.out.println("verkaufen aufgerufen");
 		//sell some stocks bitch
 		
 	}
