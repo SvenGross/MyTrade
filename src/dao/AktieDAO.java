@@ -22,107 +22,131 @@ public class AktieDAO extends MyTradeDAO {
 	ResultSet rs = null;
 
 	public boolean addAktie(Aktie aktie) {
-//
-//		try {
-//
-//			String aktienName = aktie.getName();
-//			String aktienSymbol = aktie.getSymbol();
-//			Double aktienDividende = aktie.getDividende();
-//			Double aktienPreis = aktie.getPreis();
-//			Integer aktienAnzahl = aktie.getStueck();
-//			int stockIDForForeignKey = checkIfStockTypeAlreadyExists(aktienSymbol);
-//			
-//
-//			if (stockIDForForeignKey == 0) {
-//
-//				String sqlAktieZuPoolHinzufügen = "INSERT INTO stock_data"
-//						+ "(symbol, name, nominal_price, last_dividend) VALUES"
-//						+ "(?,?,?,?)";
-//
-//				con = getConnection();
-//				PreparedStatement preparedStatement = con.prepareStatement(sqlAktieZuPoolHinzufügen);
-//
-//
-//				preparedStatement.setString(1, aktienName);
-//				preparedStatement.setString(2, aktienSymbol);
-//				preparedStatement.setDouble(3, aktienPreis);
-//				preparedStatement.setDouble(4, aktienDividende);
-//				
-//				
-//				returnConnection(con);
-//
-//			}
-//
-//			int count = 0;
-//
-//			String sqlAktienEinzelnHinzufügen = "INSERT INTO stock_pool"
-//					+ "(stockFK, price, ownerFK"
-//					+ "(?,?,?)";
-//
-//			con = getConnection();
-//
-//			PreparedStatement preparedStatement = con
-//					.prepareStatement(sqlAktienEinzelnHinzufügen);
-//
-//			while (count < aktienAnzahl) {
-//
-//				preparedStatement.setInt(1, stockIDForForeignKey);
-//				preparedStatement.setDouble(2, aktienPreis);
-//				preparedStatement.setInt(3, ((Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("angemeldeterBenutzer")).getBenutzerIDAsInt());
-//
-//				
-//				count = count + 1;
-//			}
-//
-//			returnConnection(con);
-//
-//			return true;
-//
-//		} catch (Exception e) {
-//			System.err
-//					.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'addAktie' aufgetreten.");
-//			e.printStackTrace();
-//			returnConnection(con);
+
+		try {
+
+			String aktienName = aktie.getName();
+			String aktienSymbol = aktie.getSymbol();
+			Double aktienDividende = aktie.getDividende();
+			Double aktienPreis = aktie.getPreis();
+			Integer aktienAnzahl = aktie.getStueck();
+			int stockIDForForeignKey = checkIfStockTypeAlreadyExists(aktienSymbol);
+			
+
+			if (stockIDForForeignKey == 0) {
+
+				String sqlAktieZuPoolHinzufügen = "INSERT INTO stock_data"
+						+ "(symbol, name, nominal_price, last_dividend) VALUES"
+						+ "(?,?,?,?)";
+
+				con = getConnection();
+				PreparedStatement preparedStatement = con.prepareStatement(sqlAktieZuPoolHinzufügen);
+
+				preparedStatement.setString(1, aktienSymbol);
+				preparedStatement.setString(2, aktienName);
+				preparedStatement.setDouble(3, aktienPreis);
+				preparedStatement.setDouble(4, aktienDividende);
+				
+				preparedStatement.executeUpdate();
+				
+				preparedStatement.close();
+				returnConnection(con);
+
+				try {
+					stmt = con.createStatement();
+					rs = stmt
+							.executeQuery("SELECT stockID FROM stock_data WHERE symbol = "
+									+ "'" + aktienSymbol + "'");
+
+						while (rs.next()) {
+							stockIDForForeignKey = rs.getInt("stockID");
+						}
+
+						rs.close();
+						stmt.close();
+						
+				} catch (SQLException e) {
+					e.printStackTrace();
+					returnConnection(con);
+				} finally{
+					returnConnection(con);
+				}
+				
+			}
+
+			int count = 0;
+
+			String sqlAktienEinzelnHinzufügen = "INSERT INTO stock_pool"
+					+ "(stockFK, price, ownerFK) VALUES"
+					+ "(?,?,?)";
+
+			con = getConnection();
+
+			PreparedStatement preparedStatement = con
+					.prepareStatement(sqlAktienEinzelnHinzufügen);
+
+			while (count < aktienAnzahl) {
+
+				preparedStatement.setInt(1, stockIDForForeignKey);
+				preparedStatement.setDouble(2, aktienPreis);
+				preparedStatement.setInt(3, ((Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("angemeldeterBenutzer")).getBenutzerIDAsInt());
+
+				preparedStatement.executeUpdate();
+				
+				count = count + 1;
+			}
+			preparedStatement.close();
+			returnConnection(con);
+
+			return true;
+
+		} catch (Exception e) {
+			System.err
+					.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'addAktie' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
 			return false;
-//		}
+		}
 	}
-//
-//	private int checkIfStockTypeAlreadyExists(String symbol) {
-//
-//		int stockID = 0;
-//		con = getConnection();
-//
-//		try {
-//			stmt = con.createStatement();
-//			rs = stmt
-//					.executeQuery("SELECT stockID FROM stock_data WHERE symbol = "
-//							+ symbol);
-//
-//			if (rs != null) {
-//
-//				while (rs.next()) {
-//					stockID = rs.getInt("stockID");
-//				}
-//
-//				rs.close();
-//				stmt.close();
-//				returnConnection(con);
-//
-//			} else {
-//
-//				stockID = 0;
-//
-//				rs.close();
-//				stmt.close();
-//				returnConnection(con);
-//
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return stockID;
-//
-//	}
+
+	private int checkIfStockTypeAlreadyExists(String symbol) {
+
+		int stockID = 0;
+		con = getConnection();
+
+		try {
+			stmt = con.createStatement();
+			rs = stmt
+					.executeQuery("SELECT stockID FROM stock_data WHERE symbol = "
+							+ "'" + symbol + "'");
+
+			if (rs != null) {
+
+				while (rs.next()) {
+					stockID = rs.getInt("stockID");
+				}
+
+				rs.close();
+				stmt.close();
+				
+			} else {
+
+				stockID = 0;
+				
+				rs.close();
+				stmt.close();
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			returnConnection(con);
+		}
+		
+		returnConnection(con);
+		
+		return stockID;
+
+	}
 
 	public ArrayList<Aktie> selectAlleAktienVonBenutzer() {
 
