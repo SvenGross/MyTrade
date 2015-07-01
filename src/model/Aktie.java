@@ -2,7 +2,7 @@ package model;
 
 public class Aktie {
 
-	private int aktienID;
+	private Integer aktienID = null;
 	private String name;
 	private String symbol;
 	private double preis;
@@ -11,6 +11,14 @@ public class Aktie {
 		
 	public Aktie(int aktienID, String name, String symbol, double preis, double dividende, int stueck) {
 		this.aktienID = aktienID;
+		this.name = name;
+		this.symbol = symbol;
+		this.preis = preis;
+		this.dividende = dividende;
+		this.stueck = stueck;
+	}
+	
+	public Aktie(String name, String symbol, double preis, double dividende, int stueck) {
 		this.name = name;
 		this.symbol = symbol;
 		this.preis = preis;
