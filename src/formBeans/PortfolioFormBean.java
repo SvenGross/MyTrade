@@ -27,11 +27,9 @@ public class PortfolioFormBean {
 		sessionMap = externalContext.getSessionMap();
 	}
 	
-	public void verkaufen() {
-	
-		System.out.println("verkaufen aufgerufen");
-		//sell some stocks bitch
-		
+	public String verkaufen(Integer aktienID) {
+		sessionMap.put(KonstantenSession.AUFTRAG_AKTIENID, aktienID);
+		return "auftragErfassen?faces-redirect=true";
 	}
 	
 	public ArrayList<Aktie> getAktienListe() {
