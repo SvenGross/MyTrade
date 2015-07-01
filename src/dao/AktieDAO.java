@@ -18,7 +18,39 @@ public class AktieDAO extends MyTradeDAO {
 	private Connection con = null;
 	Statement stmt;
 	ResultSet rs = null;
+	
+	public boolean addAktie (Aktie aktie) {
+		
+		try {
+			
+			String	aktienName		= aktie.getName();
+			String	aktienKuerzel	= aktie.getKuerzel();
+			Double	aktienDividende	= aktie.getDividende();
+			Double	aktienPreis		= aktie.getPreis();
+			Integer aktienAnzahl	= aktie.getStueck();
+			
+			String sqlAktieHinzufügen = "INSERT INTO stock_data"
+					+ "(symbol, name, nominal_price, last_dividend) VALUES"
+					+ "(?,?,?,?)";
 
+			con = getConnection();
+			PreparedStatement preparedStatement = con.prepareStatement(sqlAktieHinzufügen);
+			
+			preparedStatement.setString(1, aktienName);
+			preparedStatement.setString(2, aktienKuerzel);
+			
+			
+			
+			returnConnection(con);
+			return true;
+			
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'addAktie' aufgetreten.");
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public ArrayList<Aktie> selectAlleAktienVonBenutzer() {
 
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();

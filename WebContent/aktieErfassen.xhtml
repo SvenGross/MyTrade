@@ -15,9 +15,7 @@
 	<h:form>
 		<ui:include src="facelet_elemente/navigation.xhtml"/>
 
-		<div id="meldungen">
-			<h:message></h:message>
-		</div>
+		<ui:include src="facelet_elemente/meldung.xhtml"/>
 
 		<div id="inhalt">
 			<div id="container">
@@ -63,7 +61,7 @@
 
 						<div id="zurueckButton" class="button top_155">
 							<h:commandButton value="Zurück"
-								action="#{aktieErfassenFormBean.back()}"></h:commandButton>
+								action="#{aktieErfassenFormBean.backToAdministration()}"></h:commandButton>
 						</div>
 						<div id="okButton" class="button top_155">
 							<h:commandButton value="OK"

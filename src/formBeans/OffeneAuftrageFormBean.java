@@ -18,6 +18,7 @@ import model.KonstantenSession;
 public class OffeneAuftrageFormBean {
 
 	private Map<String, Object> sessionMap = null;
+	private ArrayList<Auftrag> auftragsListe;
 	
 	public OffeneAuftrageFormBean() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -25,7 +26,7 @@ public class OffeneAuftrageFormBean {
 	}
 
 	public ArrayList<Auftrag> getAuftragsListe() {
-		return new ArrayList<Auftrag>();
+		return auftragsListe;
 	}
 
 	public String getKontostand() {
