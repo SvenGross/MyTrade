@@ -64,6 +64,10 @@ public class AuftragDAO extends MyTradeDAO {
 		}
 	}
 	
+	public void auftragStornieren(int auftragsID) {
+		
+	}
+	
 	public void saveAuftrag(String name, double preis, int stueck) {
 	}
 }

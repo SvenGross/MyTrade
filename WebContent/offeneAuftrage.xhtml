@@ -45,7 +45,7 @@
 									<td align="center">#{auftrag.name}</td>
 									<td align="center">#{auftrag.stueck}</td>
 									<td align="center">#{auftrag.preis}</td>
-									<td align="center"><h:commandButton value="Stornieren" action="#{auftrag.aktionAusfuehren()}"></h:commandButton></td>
+									<td align="center"><h:commandButton value="Stornieren" action="#{offeneAuftrageFormBean.auftragStornieren(auftrag.auftragsID)}"></h:commandButton></td>
 								</tr>
 						</ui:repeat>
 					</tbody>
