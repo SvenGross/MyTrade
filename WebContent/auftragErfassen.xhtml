@@ -22,7 +22,7 @@
 		<div id="inhalt">
 			<div id="container">
 				<div id="second_titel">
-					<h2>Auftrag erfassen</h2>
+					<h2><h:outputText value="${auftragErfassenFormBean.formTitle}"></h:outputText></h2>
 				</div>
 
 				<div id="form">
@@ -30,10 +30,10 @@
 						<h:outputText value="Name"></h:outputText>
 					</div>
 					<div class="feld">
-						<h:selectOneMenu value="#{auftragErfassenFormBean.aktienName}" rendered="${!auftragErfassenFormBean.auftragVerkauf}">
+						<h:selectOneMenu value="#{auftragErfassenFormBean.name}" rendered="${!auftragErfassenFormBean.auftragVerkauf}">
 							<f:selectItems value="#{auftragErfassenFormBean.aktienListe}" />
 						</h:selectOneMenu>
-						<h:outputText value="${auftragErfassenFormBean.aktienName}"></h:outputText>
+						<h:outputText value="${auftragErfassenFormBean.name}" rendered="${auftragErfassenFormBean.auftragVerkauf}"></h:outputText>
 					</div>
 
 					<div class="label labelwidth_100 top_35">
