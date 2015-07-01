@@ -25,14 +25,20 @@ public class OffeneAuftrageFormBean {
 		sessionMap = externalContext.getSessionMap();
 	}
 
+	public String getKontostand() {
+		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
+		return new DecimalFormat("#.00").format(benutzer.getKontostand());
+	}
+
 	public ArrayList<Auftrag> getAuftragsListe() {
 		AuftragDAO auftragDAO = new AuftragDAO();
 		return auftragDAO.selectAlleAuftraegeVonBenutzer();
 	}
-
-	public String getKontostand() {
-		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
-		return new DecimalFormat("#.00").format(benutzer.getKontostand());
+	
+	public void auftragStornieren(int auftragsID) {
+		AuftragDAO auftragDAO = new AuftragDAO();
+		auftragDAO.auftragStornieren(auftragsID);
+		System.out.println(auftragsID);
 	}
 	
 }
