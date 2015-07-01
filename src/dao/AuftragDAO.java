@@ -64,8 +64,30 @@ public class AuftragDAO extends MyTradeDAO {
 		}
 	}
 	
-	public void auftragStornieren(int auftragsID) {
-		
+	public boolean auftragStornieren(int auftragsID) {
+		try {
+
+			con = getConnection();
+			stmt = con.createStatement();
+			
+			if(stmt.executeUpdate("DELETE FROM orders WHERE orderID = '" + auftragsID + "'") > 0) {
+				stmt.executeUpdate("UPDATE stock_pool SET orderFK = NULL WHERE orderFK = '" + auftragsID + "'");
+				stmt.close();
+				returnConnection(con);
+				return true;
+			}
+			else {
+				stmt.close();
+				returnConnection(con);
+				return false;
+			}
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAlleAktienVonBenutzer' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return false;
+		}
 	}
 	
 	public void saveAuftrag(String name, double preis, int stueck) {
