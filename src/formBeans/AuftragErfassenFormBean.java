@@ -4,21 +4,20 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import model.Aktie;
 import model.KonstantenSession;
-import dao.AktieDAO;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class AuftragErfassenFormBean {
 
 	private Map<String, Object> sessionMap = null;
-	private String auftragsTyp = null;
 	private Integer aktienID = null;
+	private boolean auftragVerkauf = false;
 	private String aktienName;
 	private ArrayList<Aktie> aktienListe;
 	private double preis;
@@ -28,24 +27,25 @@ public class AuftragErfassenFormBean {
 	public AuftragErfassenFormBean() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		sessionMap = externalContext.getSessionMap();
-		
+		System.out.println("HERE");
 		aktienID = (Integer) sessionMap.get(KonstantenSession.AUFTRAG_AKTIENID);
 		if(aktienID != null) {
-			auftragsTyp = "VERKAUF";
+			setAuftragVerkauf(true);
+			aktienName = "VERKAUFSAUFTRAG";
 		}
 		else {
-			auftragsTyp = "KAUF";
+			setAuftragVerkauf(false);
+			aktienName = "KAUFAUFTRAG";
 		}
+		sessionMap.remove(KonstantenSession.AUFTRAG_AKTIENID);
 	}
 	
 	public String back() {
 		return "portfolio?faces-redirect=true";
 	}
 
-	public String save() {
-		// Meldung 1 anzeigen yo
-
-		return "xxxxxxxxx?faces-redirect=true";
+	public void save() {
+		System.out.println(auftragVerkauf);
 	}
 
 	public String getAktienName() {
@@ -86,5 +86,13 @@ public class AuftragErfassenFormBean {
 	
 	public void setFehler(boolean fehler) {
 		this.fehler = fehler;
+	}
+
+	public boolean isAuftragVerkauf() {
+		return auftragVerkauf;
+	}
+
+	public void setAuftragVerkauf(boolean auftragVerkauf) {
+		this.auftragVerkauf = auftragVerkauf;
 	}
 }

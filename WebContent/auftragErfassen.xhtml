@@ -16,7 +16,7 @@
 		<ui:include src="facelet_elemente/navigation.xhtml"/>
 		
 		<div id="meldungen">
-			<h:outputText value="${Meldungen.fehlerMeldung}" rendered="${administrationFormBean.fehler}"></h:outputText>
+			<h:outputText value="${Meldungen.fehlerMeldung}"></h:outputText>
 		</div>
 
 		<div id="inhalt">
@@ -26,39 +26,36 @@
 				</div>
 
 				<div id="form">
-					<h:form>
-						<div class="label labelwidth_100">
-							<h:outputText value="Name"></h:outputText>
-						</div>
-						<div class="feld">
-							<h:selectOneMenu value="#{auftragErfassenFormBean.aktienName}">
-								<f:selectItems value="#{auftragErfassenFormBean.aktienListe}" />
-							</h:selectOneMenu>
-						</div>
+					<div class="label labelwidth_100">
+						<h:outputText value="Name"></h:outputText>
+					</div>
+					<div class="feld">
+						<h:selectOneMenu value="#{auftragErfassenFormBean.aktienName}" rendered="${!auftragErfassenFormBean.auftragVerkauf}">
+							<f:selectItems value="#{auftragErfassenFormBean.aktienListe}" />
+						</h:selectOneMenu>
+						<h:outputText value="${auftragErfassenFormBean.aktienName}"></h:outputText>
+					</div>
 
-						<div class="label labelwidth_100 top_35">
-							<h:outputText value="Preis (CHF)"></h:outputText>
-						</div>
-						<div class="feld top_35">
-							<h:inputText value="#{auftragErfassenFormBean.preis}"></h:inputText>
-						</div>
+					<div class="label labelwidth_100 top_35">
+						<h:outputText value="Preis (CHF)"></h:outputText>
+					</div>
+					<div class="feld top_35">
+						<h:inputText value="#{auftragErfassenFormBean.preis}"></h:inputText>
+					</div>
 
-						<div class="label labelwidth_100 top_65">
-							<h:outputText value="Stückzahl (1-n)"></h:outputText>
-						</div>
-						<div class="feld top_65">
-							<h:inputText value="#{auftragErfassenFormBean.stueck}"></h:inputText>
-						</div>
+					<div class="label labelwidth_100 top_65">
+						<h:outputText value="Stückzahl (1-n)"></h:outputText>
+					</div>
+					<div class="feld top_65">
+						<h:inputText value="#{auftragErfassenFormBean.stueck}"></h:inputText>
+					</div>
 
-						<div id="zurueckButton" class="button top_95">
-							<h:commandButton value="Zurück"
-								action="#{aktieErfassenFormBean.back()}"></h:commandButton>
-						</div>
-						<div id="okButton" class="button top_95">
-							<h:commandButton value="OK"
-								action="#{aktieErfassenFormBean.save()}"></h:commandButton>
-						</div>
-					</h:form>
+					<div id="zurueckButton" class="button top_95">
+						<h:commandButton value="Abbrechen" action="#{auftragErfassenFormBean.back()}"></h:commandButton>
+					</div>
+					<div id="okButton" class="button top_95">
+						<h:commandButton value="OK" action="#{auftragErfassenFormBean.save()}"></h:commandButton>
+					</div>
 				</div>
 			</div>
 		</div>
