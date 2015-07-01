@@ -21,7 +21,7 @@ public class AktieDAO extends MyTradeDAO {
 	Statement stmt;
 	ResultSet rs = null;
 
-//	public boolean addAktie(Aktie aktie) {
+	public boolean addAktie(Aktie aktie) {
 //
 //		try {
 //
@@ -83,9 +83,9 @@ public class AktieDAO extends MyTradeDAO {
 //					.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'addAktie' aufgetreten.");
 //			e.printStackTrace();
 //			returnConnection(con);
-//			return false;
+			return false;
 //		}
-//	}
+	}
 //
 //	private int checkIfStockTypeAlreadyExists(String symbol) {
 //
