@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import model.Auftrag;
 import model.Benutzer;
 import model.KonstantenSession;
+import dao.AuftragDAO;
 
 @ManagedBean
 @SessionScoped
@@ -25,7 +26,8 @@ public class OffeneAuftrageFormBean {
 	}
 
 	public ArrayList<Auftrag> getAuftragsListe() {
-		return new ArrayList<Auftrag>();
+		AuftragDAO auftragDAO = new AuftragDAO();
+		return auftragDAO.selectAlleAuftraegeVonBenutzer();
 	}
 
 	public String getKontostand() {

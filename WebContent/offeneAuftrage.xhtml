@@ -30,18 +30,22 @@
 			<div id="auftragsListe">
 				<table class="table">
 					<tr>
+						<th>Auftragsart</th>
 						<th>Symbol</th>
 						<th>Aktie</th>
+						<th>Anzahl Aktien</th>
 						<th>Preis (CHF)</th>
 						<th>Aktionen</th>
 					</tr>
 					<tbody>
 						<ui:repeat var="auftrag" value="#{offeneAuftrageFormBean.auftragsListe}" varStatus="status">
 								<tr>
-									<td>#{auftrag.symbol}</td>
-									<td>#{auftrag.name}</td>
-									<td>#{auftrag.preis}</td>
-									<td><h:outputLink value="#{auftrag.aktionAusfuehren()}">#{auftrag.aktion}</h:outputLink></td>
+									<td align="center">#{auftrag.auftragsTyp}</td>
+									<td align="center">#{auftrag.symbol}</td>
+									<td align="center">#{auftrag.name}</td>
+									<td align="center">#{auftrag.stueck}</td>
+									<td align="center">#{auftrag.preis}</td>
+									<td align="center"><h:commandButton value="Stornieren" action="#{auftrag.aktionAusfuehren()}"></h:commandButton></td>
 								</tr>
 						</ui:repeat>
 					</tbody>

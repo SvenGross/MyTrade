@@ -9,10 +9,10 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import dao.AktieDAO;
 import model.Aktie;
 import model.Benutzer;
 import model.KonstantenSession;
+import dao.AktieDAO;
 
 
 @ManagedBean

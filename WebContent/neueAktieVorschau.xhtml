@@ -28,44 +28,44 @@
 							<h:outputText value="Name"></h:outputText>
 						</div>
 						<div class="feld">
-							<h:inputText value="#{aktieErfassenFormBean.neueAktie.name}"></h:inputText>
+							<h:outputText value="#{aktieErfassenFormBean.neueAktie.name}"></h:outputText>
 						</div>
 
 						<div class="label labelwidth_130 top_35">
 							<h:outputText value="Kürzel"></h:outputText>
 						</div>
 						<div class="feld top_35">
-							<h:inputText value="#{aktieErfassenFormBean.neueAktie.kuerzel}"></h:inputText>
+							<h:outputText value="#{aktieErfassenFormBean.neueAktie.kuerzel}"></h:outputText>
 						</div>
 
 						<div class="label labelwidth_130 top_65">
 							<h:outputText value="Nominalpreis (CHF)"></h:outputText>
 						</div>
 						<div class="feld top_65">
-							<h:inputText value="#{aktieErfassenFormBean.neueAktie.preis}"></h:inputText>
+							<h:outputText value="#{aktieErfassenFormBean.neueAktie.preis}"></h:outputText>
 						</div>
 
 						<div class="label labelwidth_130 top_95">
 							<h:outputText value="Dividende"></h:outputText>
 						</div>
 						<div class="feld top_95">
-							<h:inputText value="#{aktieErfassenFormBean.neueAktie.dividende}"></h:inputText>
+							<h:outputText value="#{aktieErfassenFormBean.neueAktie.dividende}"></h:outputText>
 						</div>
 
 						<div class="label labelwidth_130 top_125">
 							<h:outputText value="Stückzahl"></h:outputText>
 						</div>
 						<div class="feld top_125">
-							<h:inputText value="#{aktieErfassenFormBean.neueAktie.stueck}"></h:inputText>
+							<h:outputText value="#{aktieErfassenFormBean.neueAktie.stueck}"></h:outputText>
 						</div>
 
 						<div id="zurueckButton" class="button top_155">
-							<h:commandButton value="Zurück"
-								action="#{aktieErfassenFormBean.neueAktie.back()}"></h:commandButton>
+							<h:commandButton value="Verwerfen"
+								action="#{aktieErfassenFormBean.backToAktieErfassen}"></h:commandButton>
 						</div>
 						<div id="okButton" class="button top_155">
-							<h:commandButton value="OK"
-								action="#{aktieErfassenFormBean.neueAktie.save()}"></h:commandButton>
+							<h:commandButton value="Speichern"
+								action="#{aktieErfassenFormBean.save}"></h:commandButton>
 						</div>
 				</div>
 			</div>

@@ -3,27 +3,52 @@ package formBeans;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import dao.AktieDAO;
 import model.Aktie;
 
 @ManagedBean
 @SessionScoped
 public class AktieErfassenFormBean {
 
-	private String name;
-	private String kuerzel;
-	private double preis;
-	private double dividende;
-	private int stueck;
-	private Aktie neueAktie;
+	private String 	name;
+	private String 	kuerzel;
+	private double 	preis;
+	private double 	dividende;
+	private int		stueck;
+	private Aktie 	neueAktie;
 	
-	public String back() {
+	public String backToAdministration() {
 
 		return "administration?faces-redirect=true";
 	}
 
 	public String vorschau() {
+
 		neueAktie = new Aktie(name, kuerzel, preis, dividende, stueck);		
+		
 		return "neueAktieVorschau?faces-redirect=true";
+
+	}
+	
+	public String backToAktieErfassen() {
+		
+		return "aktieErfassen?faces-redirect=true";
+		
+	}
+	
+	public String save() {
+		
+		AktieDAO neuesAktienDAO = new AktieDAO();
+		if (neuesAktienDAO.addAktie(neueAktie)) {
+
+			//Meldung "Aktie erfasst" Hinzufügen!!!!!!
+			
+			return "administration?faces-redirect=true";
+		}else{
+			
+			//Meldung "Aktie konnte nicht erfasst werden oder so" Hinzufügen!!!!!!
+			return "aktieErfassen?faces-redirect=true";
+		}
 	}
 
 	public String getName() {

@@ -2,18 +2,22 @@ package model;
 
 public class Auftrag {
 
-	private String aktienName;
-	private double preis;
+	private int auftragsID;
+	private String auftragsTyp;
+	private String name;
+	private String symbol;
 	private int stueck;
+	private double preis;
 	
-		
-	public Auftrag(String name, double preis, int stueck) {
-		this.aktienName = name;
-		this.preis = preis;
+	public Auftrag(int auftragsID, String auftragsTyp, String name, String symbol, int stueck, double preis) {
+		this.auftragsID = auftragsID;
+		this.auftragsTyp = auftragsTyp;
+		this.name = name;
+		this.symbol = symbol;
 		this.stueck = stueck;
+		this.preis = preis;
 	}
-	
-	
+
 	public String back() {
 		return "aktieErfassen?faces-redirect=true";
 	}
@@ -21,22 +25,37 @@ public class Auftrag {
 	public void save() {
 		//TODO
 	}
-	
-	
-	public String getAktienName() {
-		return aktienName;
+
+	public int getAuftragsID() {
+		return auftragsID;
 	}
 
-	public void setAktienName(String aktienName) {
-		this.aktienName = aktienName;
+	public void setAuftragsID(int auftragsID) {
+		this.auftragsID = auftragsID;
 	}
 
-	public double getPreis() {
-		return preis;
+	public String getAuftragsTyp() {
+		return auftragsTyp;
 	}
 
-	public void setPreis(double preis) {
-		this.preis = preis;
+	public void setAuftragsTyp(String auftragsTyp) {
+		this.auftragsTyp = auftragsTyp;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 
 	public int getStueck() {
@@ -46,6 +65,13 @@ public class Auftrag {
 	public void setStueck(int stueck) {
 		this.stueck = stueck;
 	}
-	
+
+	public double getPreis() {
+		return preis;
+	}
+
+	public void setPreis(double preis) {
+		this.preis = preis;
+	}
 	
 }

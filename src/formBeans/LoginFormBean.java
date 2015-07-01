@@ -35,6 +35,8 @@ public class LoginFormBean {
 			}
 			else 
 			{
+
+				System.err.println("BENUTZERDAO portfolio");
 				return "portfolio?faces-redirect=true";
 			}
 		

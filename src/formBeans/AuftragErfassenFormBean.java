@@ -1,6 +1,7 @@
 package formBeans;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -19,8 +20,8 @@ public class AuftragErfassenFormBean {
 
 	public AuftragErfassenFormBean() {
 	
-		AktieDAO aDAO = new AktieDAO();
-		aktienListe = aDAO.selectAlleAktienVonBenutzer();
+		AktieDAO aktieDAO = new AktieDAO();
+		aktienListe = aktieDAO.selectAlleAktienVonBenutzer();
 	}
 	
 	public String back() {

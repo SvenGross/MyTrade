@@ -34,7 +34,6 @@ public class BenutzerDAO extends MyTradeDAO {
 				count++;
 				
 				if (count > 1) {
-					System.err.println("Es gibt mehr als einen Benutzer: " + benutzername);
 					rs.close();
 					stmt.close();
 					returnConnection(con);
