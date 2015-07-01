@@ -20,29 +20,35 @@ public class AktieDAO extends MyTradeDAO {
 	Statement stmt;
 	ResultSet rs = null;
 	
-	public boolean addAktie(Aktie aktie) {
+public boolean addAktie(Aktie aktie) {
 		
 		try {
 			
 			String	aktienName		= aktie.getName();
-			String	aktienKuerzel	= aktie.getKuerzel();
+			String	aktienSymbol	= aktie.getSymbol();
 			Double	aktienDividende	= aktie.getDividende();
 			Double	aktienPreis		= aktie.getPreis();
 			Integer aktienAnzahl	= aktie.getStueck();
 			
-			String sqlAktieHinzufügen = "INSERT INTO stock_data"
-					+ "(symbol, name, nominal_price, last_dividend) VALUES"
-					+ "(?,?,?,?)";
+//			if(checkIfStockTypeAlreadyExists(aktienSymbol) == false) {
+			
+				String sqlAktieHinzufügen = "INSERT INTO stock_data"
+						+ "(symbol, name, nominal_price, last_dividend) VALUES"
+						+ "(?,?,?,?)";
 
-			con = getConnection();
-			PreparedStatement preparedStatement = con.prepareStatement(sqlAktieHinzufügen);
+				con = getConnection();
+				PreparedStatement preparedStatement = con.prepareStatement(sqlAktieHinzufügen);
 			
-			preparedStatement.setString(1, aktienName);
-			preparedStatement.setString(2, aktienKuerzel);
+				preparedStatement.setString(1, aktienName);
+				preparedStatement.setString(2, aktienSymbol);
+				preparedStatement.setDouble(3, aktienPreis);
+				preparedStatement.setDouble(4, aktienDividende);
 			
 			
+				returnConnection(con);
 			
-			returnConnection(con);
+//			}
+			
 			return true;
 			
 		} catch (Exception e) {
@@ -51,6 +57,30 @@ public class AktieDAO extends MyTradeDAO {
 			return false;
 		}
 	}
+	
+//	private int checkIfStockTypeAlreadyExists(String symbol) {
+//		
+//		String stockSymbol;
+//		con = getConnection();
+//
+//		try {
+//
+//			stmt = con.createStatement();
+//			rs = stmt.executeQuery("SELECT stockID FROM stock_data WHERE symbol = " + symbol);
+//					
+//			if (!rs.isBeforeFirst() ) {    
+//				 
+//				} 
+//
+//			
+//			rs.close();
+//			stmt.close();
+//			returnConnection(con);
+//		
+//		
+//		
+//		return false;
+//	}
 	
 	public ArrayList<Aktie> selectAlleAktienVonBenutzer() {
 
