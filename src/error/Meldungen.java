@@ -23,6 +23,9 @@ public class Meldungen {
 	public static String AUFTRAG_ERFASSEN       = "Der Auftrag wurde erfolgreich erfasst: ";
 	public static String AUFTRAG_STORNIEREN     = "Der Auftrag wurde erfolgreich storniert: ";
 	
+	//TODO DONE: dividende ausschuetten
+	
+	
 	public Meldungen() {
 		sessionMap.put(KonstantenSession.FEHLER_MELDUNG, "");
 	}
