@@ -29,6 +29,7 @@ public class Meldungen {
 	public String printFehler() {
 		
 		String fehlerMeldung = (String) sessionMap.get(KonstantenSession.FEHLER_MELDUNG);
+		sessionMap.put(KonstantenSession.FEHLER_MELDUNG, "");
 		return fehlerMeldung;
 	}
 }
