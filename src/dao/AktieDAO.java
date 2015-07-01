@@ -19,7 +19,7 @@ public class AktieDAO extends MyTradeDAO {
 	Statement stmt;
 	ResultSet rs = null;
 
-	public ArrayList<Aktie> getAlleAktienVonBenutzer() {
+	public ArrayList<Aktie> selectAlleAktienVonBenutzer() {
 
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
@@ -45,7 +45,6 @@ public class AktieDAO extends MyTradeDAO {
 				double aktienDividende = rs.getDouble("last_dividend");
 				int aktienAnzahl = rs.getInt("stock_count");
 				
-				System.out.println(aktienAnzahl);
 				Aktie aktie = new Aktie(aktienName, aktienSymbol, aktienPreis, aktienDividende, aktienAnzahl);
 				alleAktien.add(aktie);
 			}

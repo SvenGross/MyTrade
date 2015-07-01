@@ -20,7 +20,7 @@ public class AuftragErfassenFormBean {
 	public AuftragErfassenFormBean() {
 	
 		AktieDAO aDAO = new AktieDAO();
-		aktienListe = aDAO.getAlleAktienVonBenutzer();
+		aktienListe = aDAO.selectAlleAktienVonBenutzer();
 	}
 	
 	public String back() {

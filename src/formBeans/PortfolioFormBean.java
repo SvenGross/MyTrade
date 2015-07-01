@@ -34,7 +34,7 @@ public class PortfolioFormBean {
 	
 	public ArrayList<Aktie> getAktienListe() {
 		AktieDAO aktieDAO = new AktieDAO();
-		return aktieDAO.getAlleAktienVonBenutzer();
+		return aktieDAO.selectAlleAktienVonBenutzer();
 	}
 
 	public String getKontostand() {
