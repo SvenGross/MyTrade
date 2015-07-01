@@ -3,15 +3,14 @@ package model;
 public class Aktie {
 
 	private String name;
-	private String kuerzel;
+	private String symbol;
 	private double preis;
 	private double dividende;
 	private int stueck;
 		
-	public Aktie(String name, String kuerzel, double preis, double dividende,
-			int stueck) {
+	public Aktie(String name, String symbol, double preis, double dividende, int stueck) {
 		this.name = name;
-		this.kuerzel = kuerzel;
+		this.symbol = symbol;
 		this.preis = preis;
 		this.dividende = dividende;
 		this.stueck = stueck;
@@ -31,11 +30,11 @@ public class Aktie {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getKuerzel() {
-		return kuerzel;
+	public String getSymbol() {
+		return symbol;
 	}
-	public void setKuerzel(String kuerzel) {
-		this.kuerzel = kuerzel;
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 	public double getPreis() {
 		return preis;
