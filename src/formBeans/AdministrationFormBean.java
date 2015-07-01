@@ -7,6 +7,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import error.Meldungen;
 import model.KonstantenSession;
 
 @ManagedBean
@@ -21,6 +22,6 @@ public class AdministrationFormBean {
 				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		
-		sessionMap.put(KonstantenSession.FEHLER_MELDUNG, "test");
+		sessionMap.put(KonstantenSession.FEHLER_MELDUNG, Meldungen.DIVIDENDE_AUSSCHUETTEN);
 	}
 }
