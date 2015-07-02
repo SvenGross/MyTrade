@@ -33,7 +33,6 @@ public class AktieDAO extends MyTradeDAO {
 			Double aktienPreis = aktie.getPreis();
 			Integer aktienAnzahl = aktie.getStueck();
 			int stockIDForForeignKey = checkIfStockTypeAlreadyExists(aktienSymbol);
-			
 
 			if (stockIDForForeignKey == 0) {
 
@@ -144,9 +143,11 @@ public class AktieDAO extends MyTradeDAO {
 
 	}
 
-	public ArrayList<Aktie> selectAlleAktienVonBenutzer() {
-
-		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
+	public ArrayList<Aktie> selectAlleAktienVonBenutzer(Integer benutzerID) {
+		
+		if(benutzerID == null) {
+			benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
+		}
 		ArrayList<Aktie> alleAktien = new ArrayList<Aktie>();
 		
 		try {
@@ -228,6 +229,36 @@ public class AktieDAO extends MyTradeDAO {
 		}
 	}
 	
+	public int selectAnzahlAktienDesBenutzers(int aktienID) {
+		
+		int anzahlAktien = 0;
+		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
+		
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT COUNT(*) as anzahl "
+							+ "FROM stock_pool "
+							+ "WHERE stock_pool.stockFK = '" + aktienID + "' AND "
+							+ "stock_pool.ownerFK = '" + benutzerID + "'");
+
+			while (rs.next()) {
+				anzahlAktien = rs.getInt("anzahl");
+			}
+
+			rs.close();
+			stmt.close();
+			returnConnection(con);
+			return anzahlAktien;
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAktie' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return anzahlAktien;
+		}
+	}
+	
 	public ArrayList<Aktie> selectAlleAktien() {
 		
 		ArrayList<Aktie> alleAktien = new ArrayList<Aktie>();
@@ -258,6 +289,31 @@ public class AktieDAO extends MyTradeDAO {
 			e.printStackTrace();
 			returnConnection(con);
 			return null;
+		}
+	}
+
+	public boolean dividendeAktualisieren(int neueDividende, int aktieID) {
+		
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			
+			if(stmt.executeUpdate("UPDATE stock_data SET last_dividend = '" + neueDividende + "' WHERE stockID = '" + aktieID + "'") == 1) {
+				stmt.close();
+				returnConnection(con);
+				return true;
+			}
+			else {
+				stmt.close();
+				returnConnection(con);
+				return false;
+			}
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'dividendeAktualisieren' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return false;
 		}
 	}
 }

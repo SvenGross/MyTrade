@@ -23,20 +23,17 @@ public class AuftragErfassenFormBean {
 
 	private boolean auftragVerkauf = false;
 	private ArrayList<Aktie> aktienListe;
-	private Integer aktienID = null;
+	private Integer aktienID;
 	private String name;
 	private double preis;
+	private int maxStueck;
 	private int stueck;
 	
-	public AuftragErfassenFormBean() {
-		init();
-	}
-
 	private void init() {
 		aktienID = null;
 		name = "";
 		preis = 0;
-		
+		stueck = 1;
 		
 		aktienID = (Integer) sessionMap.get(KonstantenSession.AUFTRAG_AKTIENID);
 		if(aktienID != null) {
@@ -47,6 +44,7 @@ public class AuftragErfassenFormBean {
 			Aktie aktie = aktieDAO.selectAktie(aktienID);
 			name = aktie.getName();
 			preis = aktie.getPreis();
+			maxStueck = aktieDAO.selectAnzahlAktienDesBenutzers(aktienID);
 		}
 		else {
 			setAuftragVerkauf(false);
@@ -60,7 +58,6 @@ public class AuftragErfassenFormBean {
 	}
 
 	public void save() {
-		System.out.println(auftragVerkauf);
 	}
 
 	public Map<String, Object> getSessionMap() {
@@ -134,5 +131,13 @@ public class AuftragErfassenFormBean {
 
 	public void setStueck(int stueck) {
 		this.stueck = stueck;
+	}
+
+	public int getMaxStueck() {
+		return maxStueck;
+	}
+
+	public void setMaxStueck(int maxStueck) {
+		this.maxStueck = maxStueck;
 	}
 }
