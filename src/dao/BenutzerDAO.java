@@ -262,7 +262,30 @@ public class BenutzerDAO extends MyTradeDAO {
 			returnConnection(con);
 			return 0;
 		}
-
 	}
 
+	public boolean kontostandAktualisieren(double kontostand, int userID) {
+		
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			
+			if(stmt.executeUpdate("UPDATE users SET account_balance = '" + kontostand + "' WHERE userID = '" + userID + "'") == 1) {
+				stmt.close();
+				returnConnection(con);
+				return true;
+			}
+			else {
+				stmt.close();
+				returnConnection(con);
+				return false;
+			}
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'kontostandAktualisieren' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return false;
+		}
+	}
 }
