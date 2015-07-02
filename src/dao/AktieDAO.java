@@ -227,4 +227,37 @@ public class AktieDAO extends MyTradeDAO {
 			return null;
 		}
 	}
+	
+	public ArrayList<Aktie> selectAlleAktien() {
+		
+		ArrayList<Aktie> alleAktien = new ArrayList<Aktie>();
+		
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM stock_data");
+
+			while (rs.next()) {
+				int aktienID = rs.getInt("stockID");
+				String aktienName = rs.getString("name");
+				String aktienSymbol = rs.getString("symbol");
+				double aktienPreis = rs.getDouble("nominal_price");
+				double aktienDividende = rs.getDouble("last_dividend");
+
+				Aktie aktie = new Aktie(aktienID, aktienName, aktienSymbol, aktienPreis, aktienDividende, 1);
+				alleAktien.add(aktie);
+			}
+
+			rs.close();
+			stmt.close();
+			returnConnection(con);
+			return alleAktien;
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAlleAktien' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return null;
+		}
+	}
 }

@@ -5,6 +5,8 @@ import java.util.Random;
 /**
  *  Verändere eine Dividende in gegebenem Intervall zufällig.
  *  @author Philipp Gressly Freimann(phi@gressly.eu)
+ *  
+ *  Datentyp von int nach double geändert durch Sacha Weiersmüller
  */
 /*
  * History: first Implementation: Dec 20, 2011
@@ -18,7 +20,7 @@ public class Dividendenaenderung {
 	public static final int MITTLERE_STREEUNG = 3;
 	public static final int STARKE_STREEUNG = 5;
 	
-	static int neueDividende(int alteDividende, int streeung, int min, int max) {
+	public static int neueDividende(double alteDividende, int streeung, int min, int max) {
 		
 		double neueDividende, dividendenAenderung;
 		
