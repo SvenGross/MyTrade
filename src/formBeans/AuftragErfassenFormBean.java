@@ -94,7 +94,8 @@ public class AuftragErfassenFormBean {
 	}
 
 	public ArrayList<Aktie> getAktienListe() {
-		return aktienListe;
+		AktieDAO aktieDAO = new AktieDAO();
+		return aktieDAO.selectAlleAktien();
 	}
 
 	public void setAktienListe(ArrayList<Aktie> aktienListe) {

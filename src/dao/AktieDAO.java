@@ -24,7 +24,6 @@ public class AktieDAO extends MyTradeDAO {
 	private Map<String, Object> sessionMap = externalContext.getSessionMap();
 
 	public boolean addAktie(Aktie aktie) {
-
 		try {
 
 			String aktienName = aktie.getName();
