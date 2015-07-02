@@ -47,7 +47,6 @@ public class AdministrationFormBean {
 				System.out.println("Aktie: " + aktie.getName() + " Dividende wurde ausbezahlt.");
 			}
 		}
-		
 		System.out.println("----------- Übergang zu Benutzer");
 		if(alleBenutzer != null) {
 			
@@ -73,9 +72,11 @@ public class AdministrationFormBean {
 			}
 		}
 						
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 
-		sessionMap.put(KonstantenSession.FEHLER_MELDUNG,Meldungen.DIVIDENDE_AUSSCHUETTEN);
+		sessionMap.put(KonstantenSession.FEHLER_MELDUNG,
+				Meldungen.DIVIDENDE_AUSSCHUETTEN);
 	}
 }
