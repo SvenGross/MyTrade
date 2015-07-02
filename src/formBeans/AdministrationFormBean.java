@@ -48,8 +48,11 @@ public class AdministrationFormBean {
 			}
 		}
 		
+<<<<<<< HEAD
 		System.out.println("----------- Übergang zu Benutzer");
 		
+=======
+>>>>>>> branch 'master' of https://github.com/grosssven/MyTrade.git
 		if(alleBenutzer != null) {
 			
 			for (Benutzer benutzer : alleBenutzer) {
@@ -57,6 +60,7 @@ public class AdministrationFormBean {
 				double 	neuerKontostand = benutzer.getKontostand();
 				System.out.println("Benutzer: " + benutzer.getBenutzername() + " Kontostand: " + neuerKontostand);
 				
+				double 	neuerKontostand = benutzer.getKontostand();
 				ArrayList<Aktie> aktienVonBenutzer = aktieDao.selectAlleAktienVonBenutzer(benutzer.getBenutzerIDAsInt());
 				
 				if(aktienVonBenutzer != null) {
@@ -64,7 +68,11 @@ public class AdministrationFormBean {
 					for (Aktie aktie : aktienVonBenutzer) {
 						
 						double gesamteDividendeDieserAktie = aktie.getDividende() * aktie.getStueck();
+<<<<<<< HEAD
 						System.out.println("Aktie: " + aktie.getName() + " Dividende: " + aktie.getDividende() + " Gesamt: " + gesamteDividendeDieserAktie);
+=======
+
+>>>>>>> branch 'master' of https://github.com/grosssven/MyTrade.git
 						neuerKontostand =+ gesamteDividendeDieserAktie;
 					}
 				}
