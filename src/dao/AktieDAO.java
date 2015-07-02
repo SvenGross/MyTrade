@@ -228,8 +228,6 @@ public class AktieDAO extends MyTradeDAO {
 			return null;
 		}
 	}
-
-	
 	
 	public int selectAnzahlAktienDesBenutzers(int aktienID) {
 		
@@ -261,7 +259,7 @@ public class AktieDAO extends MyTradeDAO {
 		}
 	}
 	
-public ArrayList<Aktie> selectAlleAktien() {
+	public ArrayList<Aktie> selectAlleAktien() {
 		
 		ArrayList<Aktie> alleAktien = new ArrayList<Aktie>();
 		
@@ -293,8 +291,8 @@ public ArrayList<Aktie> selectAlleAktien() {
 			return null;
 		}
 	}
-	
-public boolean dividendeAktualisieren(int neueDividende, int aktieID) {
+
+	public boolean dividendeAktualisieren(int neueDividende, int aktieID) {
 		
 		try {
 			con = getConnection();

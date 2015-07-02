@@ -34,20 +34,40 @@ public class AdministrationFormBean {
 		AktieDAO aktieDao = new AktieDAO();
 
 		ArrayList<Benutzer> alleBenutzer = benutzerDao.getAllUsers();
-
+		ArrayList<Aktie> alleAktien      = aktieDao.selectAlleAktien();
+		
 		//zuerst alle aktien
+		if(alleAktien != null) {
+			
+			for (Aktie aktie : alleAktien) {
+				
+				//Dividende berechnen
+				int neueDividende = Dividendenaenderung.neueDividende(aktie.getDividende(), Dividendenaenderung.MITTLERE_STREEUNG, 10, 100);
+				
+				//Dividende speichern
+				aktieDao.dividendeAktualisieren(neueDividende, aktie.getAktienID());
+			}
+		}
 		
 		// dann benutzer
-								
-						//Dividende berechnen
-						int neueDividende = Dividendenaenderung.neueDividende(aktie.getDividende(), Dividendenaenderung.MITTLERE_STREEUNG, 10, 100);
+		if(alleBenutzer != null) {
+			
+			for (Benutzer benutzer : alleBenutzer) {
+				
+				ArrayList<Aktie> aktienVonBenutzer = aktieDao.selectAlleAktienVonBenutzer(benutzer.getBenutzerIDAsInt());
+				
+				if(aktienVonBenutzer != null) {
+					
+					for (Aktie aktie : aktienVonBenutzer) {
 						
-						//Dividende dem Kontostand hinzufügen
-						
-						
-						
-						//Dividende speichern
+						double gesamteDividendeDieserAktie = aktie.getDividende() * aktie.getStueck();
 
+						// kontostand updaten
+					}
+				}
+			}
+		}
+						
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();

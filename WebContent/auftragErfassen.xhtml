@@ -37,14 +37,16 @@
 					</div>
 
 					<div class="label labelwidth_100 top_35">
-						<h:outputText value="Preis (CHF)"></h:outputText>
+						<h:outputText value="Preis (CHF)" rendered="${!auftragErfassenFormBean.auftragVerkauf}"></h:outputText>
+						<h:outputText value="Preis (CHF)" rendered="${auftragErfassenFormBean.auftragVerkauf}"></h:outputText>
 					</div>
 					<div class="feld top_35">
 						<h:inputText value="#{auftragErfassenFormBean.preis}"></h:inputText>
 					</div>
 
 					<div class="label labelwidth_100 top_65">
-						<h:outputText value="Stückzahl (1-n)"></h:outputText>
+						<h:outputText value="Stückzahl (1-n)" rendered="${!auftragErfassenFormBean.auftragVerkauf}"></h:outputText>
+						<h:outputText value="Stückzahl (1-${auftragErfassenFormBean.maxStueck})" rendered="${auftragErfassenFormBean.auftragVerkauf}"></h:outputText>
 					</div>
 					<div class="feld top_65">
 						<h:inputText value="#{auftragErfassenFormBean.stueck}"></h:inputText>
