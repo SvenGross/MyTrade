@@ -36,24 +36,21 @@ public class AdministrationFormBean {
 		ArrayList<Benutzer> alleBenutzer = benutzerDao.getAllUsers();
 		ArrayList<Aktie> alleAktien      = aktieDao.selectAlleAktien();
 		
-		//zuerst alle aktien
 		if(alleAktien != null) {
 			
 			for (Aktie aktie : alleAktien) {
 				
-				//Dividende berechnen
 				int neueDividende = Dividendenaenderung.neueDividende(aktie.getDividende(), Dividendenaenderung.MITTLERE_STREEUNG, 10, 100);
 				
-				//Dividende speichern
 				aktieDao.dividendeAktualisieren(neueDividende, aktie.getAktienID());
 			}
 		}
 		
-		// dann benutzer
 		if(alleBenutzer != null) {
 			
 			for (Benutzer benutzer : alleBenutzer) {
 				
+				double 	neuerKontostand = benutzer.getKontostand();
 				ArrayList<Aktie> aktienVonBenutzer = aktieDao.selectAlleAktienVonBenutzer(benutzer.getBenutzerIDAsInt());
 				
 				if(aktienVonBenutzer != null) {
@@ -62,9 +59,11 @@ public class AdministrationFormBean {
 						
 						double gesamteDividendeDieserAktie = aktie.getDividende() * aktie.getStueck();
 
-						// kontostand updaten
+						neuerKontostand =+ gesamteDividendeDieserAktie;
 					}
 				}
+				
+				benutzerDao.kontostandAktualisieren(neuerKontostand, benutzer.getBenutzerIDAsInt());
 			}
 		}
 						
