@@ -10,12 +10,14 @@ import javax.faces.context.FacesContext;
 
 import model.Aktie;
 import model.KonstantenSession;
+import dao.AktieDAO;
 
 @ManagedBean
 @SessionScoped
 public class AuftragErfassenFormBean {
-
-	private Map<String, Object> sessionMap = null;
+	
+	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	private Map<String, Object> sessionMap = externalContext.getSessionMap();
 	private String formTitle = "";
 	private boolean fehler;
 
@@ -31,13 +33,20 @@ public class AuftragErfassenFormBean {
 	}
 
 	private void init() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		sessionMap = externalContext.getSessionMap();
-		System.out.println("HERE");
+		aktienID = null;
+		name = "";
+		preis = 0;
+		
+		
 		aktienID = (Integer) sessionMap.get(KonstantenSession.AUFTRAG_AKTIENID);
 		if(aktienID != null) {
 			setAuftragVerkauf(true);
 			formTitle = "VERKAUFSAUFTRAG";
+			
+			AktieDAO aktieDAO = new AktieDAO();
+			Aktie aktie = aktieDAO.selectAktie(aktienID);
+			name = aktie.getName();
+			preis = aktie.getPreis();
 		}
 		else {
 			setAuftragVerkauf(false);

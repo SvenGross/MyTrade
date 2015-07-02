@@ -18,8 +18,10 @@ import model.KonstantenSession;
 public class AktieDAO extends MyTradeDAO {
 
 	private Connection con = null;
-	Statement stmt;
-	ResultSet rs = null;
+	private Statement stmt;
+	private ResultSet rs = null;
+	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	private Map<String, Object> sessionMap = externalContext.getSessionMap();
 
 	public boolean addAktie(Aktie aktie) {
 
@@ -54,9 +56,7 @@ public class AktieDAO extends MyTradeDAO {
 
 				try {
 					stmt = con.createStatement();
-					rs = stmt
-							.executeQuery("SELECT stockID FROM stock_data WHERE symbol = "
-									+ "'" + aktienSymbol + "'");
+					rs = stmt.executeQuery("SELECT stockID FROM stock_data WHERE symbol = '" + aktienSymbol + "'");
 
 						while (rs.next()) {
 							stockIDForForeignKey = rs.getInt("stockID");
@@ -82,8 +82,7 @@ public class AktieDAO extends MyTradeDAO {
 
 			con = getConnection();
 
-			PreparedStatement preparedStatement = con
-					.prepareStatement(sqlAktienEinzelnHinzufügen);
+			PreparedStatement preparedStatement = con.prepareStatement(sqlAktienEinzelnHinzufügen);
 
 			while (count < aktienAnzahl) {
 
@@ -101,8 +100,7 @@ public class AktieDAO extends MyTradeDAO {
 			return true;
 
 		} catch (Exception e) {
-			System.err
-					.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'addAktie' aufgetreten.");
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'addAktie' aufgetreten.");
 			e.printStackTrace();
 			returnConnection(con);
 			return false;
@@ -116,9 +114,7 @@ public class AktieDAO extends MyTradeDAO {
 
 		try {
 			stmt = con.createStatement();
-			rs = stmt
-					.executeQuery("SELECT stockID FROM stock_data WHERE symbol = "
-							+ "'" + symbol + "'");
+			rs = stmt.executeQuery("SELECT stockID FROM stock_data WHERE symbol = '" + symbol + "'");
 
 			if (rs != null) {
 
@@ -150,18 +146,11 @@ public class AktieDAO extends MyTradeDAO {
 
 	public ArrayList<Aktie> selectAlleAktienVonBenutzer() {
 
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		Map<String, Object> sessionMap = externalContext.getSessionMap();
-		int benutzerID = ((Benutzer) sessionMap
-				.get(KonstantenSession.ANGEMELDETER_BENUTZER))
-				.getBenutzerIDAsInt();
-
+		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
 		ArrayList<Aktie> alleAktien = new ArrayList<Aktie>();
-		con = getConnection();
-
+		
 		try {
-
+			con = getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("SELECT stock_data.stockID, stock_data.symbol, stock_data.name, stock_data.nominal_price, "
 							+ "stock_data.last_dividend, COUNT(*) AS stock_count "
@@ -188,8 +177,51 @@ public class AktieDAO extends MyTradeDAO {
 			return alleAktien;
 
 		} catch (Exception e) {
-			System.err
-					.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAlleAktienVonBenutzer' aufgetreten.");
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAlleAktienVonBenutzer' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return null;
+		}
+	}
+	
+	public Aktie selectAktie(int aktienID) {
+
+		Aktie aktie = null;
+		
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT stock_data.symbol, stock_data.name, stock_data.last_dividend "
+							+ "FROM stock_data "
+							+ "WHERE stock_data.stockID = '" + aktienID + "'");
+
+			while (rs.next()) {
+				String aktienName = rs.getString("name");
+				String aktienSymbol = rs.getString("symbol");
+				double aktienDividende = rs.getDouble("last_dividend");
+				
+				aktie = new Aktie(aktienID, aktienName, aktienSymbol, 0, aktienDividende, 0);
+			}
+			
+			if(aktie != null) {
+				stmt = con.createStatement();
+				rs = stmt.executeQuery("SELECT AVG(orders.price_per_share) as price "
+								+ "FROM orders "
+								+ "WHERE orders.stockFK = '" + aktienID + "'");
+
+				while (rs.next()) {
+					double aktienPreis = rs.getDouble("price");
+					aktie.setPreis(aktienPreis);
+				}
+			}
+
+			rs.close();
+			stmt.close();
+			returnConnection(con);
+			return aktie;
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAktie' aufgetreten.");
 			e.printStackTrace();
 			returnConnection(con);
 			return null;
