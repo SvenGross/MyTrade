@@ -204,15 +204,21 @@ public class AktieDAO extends MyTradeDAO {
 			}
 			
 			if(aktie != null) {
+				int anzahl = 0;
+				double preis = 0;
+				
 				stmt = con.createStatement();
-				rs = stmt.executeQuery("SELECT AVG(orders.price_per_share) as price "
+				rs = stmt.executeQuery("SELECT orders.quantity, orders.price_per_share "
 								+ "FROM orders "
 								+ "WHERE orders.stockFK = '" + aktienID + "'");
 
 				while (rs.next()) {
-					double aktienPreis = rs.getDouble("price");
-					aktie.setPreis(aktienPreis);
+					preis = preis + (rs.getDouble("quantity") * rs.getDouble("price_per_share"));
+					anzahl = anzahl + rs.getInt("quantity");
 				}
+				
+				double aktienPreis = preis/anzahl;
+				aktie.setPreis(aktienPreis);
 			}
 
 			rs.close();

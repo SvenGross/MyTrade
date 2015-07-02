@@ -15,16 +15,15 @@ import model.KonstantenSession;
 
 public class AuftragDAO extends MyTradeDAO {
 
+	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	private Map<String, Object> sessionMap = externalContext.getSessionMap();
 	private Connection con = null;
-	Statement stmt;
-	ResultSet rs = null;
+	private Statement stmt;
+	private ResultSet rs = null;
 	
 	public ArrayList<Auftrag> selectAlleAuftraegeVonBenutzer() {
 
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
-		
 		ArrayList<Auftrag> alleAuftraege = new ArrayList<Auftrag>();
 
 		try {
@@ -57,7 +56,7 @@ public class AuftragDAO extends MyTradeDAO {
 			return alleAuftraege;
 
 		} catch (Exception e) {
-			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAlleAktienVonBenutzer' aufgetreten.");
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAlleAuftraegeVonBenutzer' aufgetreten.");
 			e.printStackTrace();
 			returnConnection(con);
 			return null;
@@ -83,13 +82,32 @@ public class AuftragDAO extends MyTradeDAO {
 			}
 
 		} catch (Exception e) {
-			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'selectAlleAktienVonBenutzer' aufgetreten.");
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'auftragStornieren' aufgetreten.");
 			e.printStackTrace();
 			returnConnection(con);
 			return false;
 		}
 	}
 	
-	public void saveAuftrag(String name, double preis, int stueck) {
+	public boolean auftragErfassen(int aktienID, int anzahl, double preis, int type) {
+		
+		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
+		
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			
+			stmt.execute("INSERT INTO orders (userFK, stockFK, quantity, price_per_share, typeFK) "
+					+ "VALUES('" + benutzerID + "', '" + aktienID + "', '" + anzahl + "', '" + preis + "', '" + type + "')");
+			stmt.close();
+			returnConnection(con);
+			return true;
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'auftragErfassen' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return false;
+		}
 	}
 }

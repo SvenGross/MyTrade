@@ -30,8 +30,8 @@
 						<h:outputText value="Name"></h:outputText>
 					</div>
 					<div class="feld">
-						<h:selectOneMenu value="#{auftragErfassenFormBean.name}" valueChangeListener="#{auftragErfassenFormBean.valueChanged}" rendered="${!auftragErfassenFormBean.auftragVerkauf}">
-							<f:selectItems value="#{auftragErfassenFormBean.aktienListe}" var="aktie" itemLabel="#{aktie.name}"/>
+						<h:selectOneMenu value="#{auftragErfassenFormBean.aktienID}" rendered="${!auftragErfassenFormBean.auftragVerkauf}">
+							<f:selectItems value="#{auftragErfassenFormBean.aktienListe}" var="a" itemLabel="#{a.name}" itemValue="#{a.aktienID}"/>
 						</h:selectOneMenu>
 						<h:outputText value="${auftragErfassenFormBean.name}" rendered="${auftragErfassenFormBean.auftragVerkauf}"></h:outputText>
 					</div>

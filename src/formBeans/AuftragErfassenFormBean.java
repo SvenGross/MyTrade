@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import model.Aktie;
 import model.KonstantenSession;
 import dao.AktieDAO;
+import dao.AuftragDAO;
 
 @ManagedBean
 @SessionScoped
@@ -22,7 +23,6 @@ public class AuftragErfassenFormBean {
 	private boolean fehler;
 
 	private boolean auftragVerkauf = false;
-	private ArrayList<Aktie> aktienListe;
 	private Integer aktienID;
 	private String name;
 	private double preis;
@@ -57,7 +57,17 @@ public class AuftragErfassenFormBean {
 		return "portfolio?faces-redirect=true";
 	}
 
-	public void save() {
+	public String save() {
+		
+		AuftragDAO auftragDAO = new AuftragDAO();
+		if(auftragVerkauf) {
+			auftragDAO.auftragErfassen(aktienID, stueck, preis, 2);
+		}
+		else {
+			auftragDAO.auftragErfassen(aktienID, stueck, preis, 1);
+		}
+		
+		return "offeneAuftrage?faces-redirect=true";
 	}
 
 	public Map<String, Object> getSessionMap() {
@@ -96,10 +106,6 @@ public class AuftragErfassenFormBean {
 	public ArrayList<Aktie> getAktienListe() {
 		AktieDAO aktieDAO = new AktieDAO();
 		return aktieDAO.selectAlleAktien();
-	}
-
-	public void setAktienListe(ArrayList<Aktie> aktienListe) {
-		this.aktienListe = aktienListe;
 	}
 
 	public Integer getAktienID() {
