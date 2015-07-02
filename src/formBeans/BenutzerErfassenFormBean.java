@@ -33,7 +33,7 @@ public class BenutzerErfassenFormBean {
 		if (benutzerDAO.benutzerHinzufuegen(benutzer)){
 			//gib message successful
 		} else{
-			//same same but different
+			//nicht successful
 		}
 		
 
