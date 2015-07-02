@@ -34,44 +34,65 @@ public class AdministrationFormBean {
 		AktieDAO aktieDao = new AktieDAO();
 
 		ArrayList<Benutzer> alleBenutzer = benutzerDao.getAllUsers();
-		ArrayList<Aktie> alleAktien      = aktieDao.selectAlleAktien();
-		
-		if(alleAktien != null) {
-			
+		ArrayList<Aktie> alleAktien = aktieDao.selectAlleAktien();
+
+		if (alleAktien != null) {
+
 			for (Aktie aktie : alleAktien) {
-				
-				int neueDividende = Dividendenaenderung.neueDividende(aktie.getDividende(), Dividendenaenderung.MITTLERE_STREEUNG, 10, 100);
-				System.out.println("Aktie: " + aktie.getName() + "    Neue Dividende: " + neueDividende);
-				
-				aktieDao.dividendeAktualisieren(neueDividende, aktie.getAktienID());
-				System.out.println("Aktie: " + aktie.getName() + " Dividende wurde ausbezahlt.");
+
+				int neueDividende = Dividendenaenderung.neueDividende(
+						aktie.getDividende(),
+						Dividendenaenderung.MITTLERE_STREEUNG, 10, 100);
+				System.out.println("Aktie: " + aktie.getName()
+						+ "    Neue Dividende: " + neueDividende);
+
+				aktieDao.dividendeAktualisieren(neueDividende,
+						aktie.getAktienID());
+				System.out.println("Aktie: " + aktie.getName()
+						+ " Dividende wurde ausbezahlt.");
 			}
 		}
 		System.out.println("----------- Übergang zu Benutzer");
-		if(alleBenutzer != null) {
-			
+		if (alleBenutzer != null) {
+
 			for (Benutzer benutzer : alleBenutzer) {
-								
-				double 	neuerKontostand = benutzer.getKontostand();
-				System.out.println("Benutzer: " + benutzer.getBenutzername() + " Kontostand: " + neuerKontostand);
-				
-				neuerKontostand = benutzer.getKontostand();
-				ArrayList<Aktie> aktienVonBenutzer = aktieDao.selectAlleAktienVonBenutzer(benutzer.getBenutzerIDAsInt());
-				
-				if(aktienVonBenutzer != null) {
-					
-					for (Aktie aktie : aktienVonBenutzer) {
-						
-						double gesamteDividendeDieserAktie = aktie.getDividende() * aktie.getStueck();
-						System.out.println("Aktie: " + aktie.getName() + " Dividende: " + aktie.getDividende() + " Gesamt: " + gesamteDividendeDieserAktie);
-						neuerKontostand =+ gesamteDividendeDieserAktie;
+
+				if (!benutzer.isAdministrator()) {
+
+					double neuerKontostand = benutzer.getKontostand();
+					System.out.println("Benutzer: "
+							+ benutzer.getBenutzername() + " Kontostand: "
+							+ neuerKontostand);
+
+					neuerKontostand = benutzer.getKontostand();
+					ArrayList<Aktie> aktienVonBenutzer = aktieDao
+							.selectAlleAktienVonBenutzer(benutzer
+									.getBenutzerIDAsInt());
+
+					if (aktienVonBenutzer != null) {
+
+						for (Aktie aktie : aktienVonBenutzer) {
+
+							double gesamteDividendeDieserAktie = aktie
+									.getDividende() * aktie.getStueck();
+							System.out
+									.println("Aktie: " + aktie.getName()
+											+ " Dividende: "
+											+ aktie.getDividende()
+											+ " Gesamt: "
+											+ gesamteDividendeDieserAktie);
+							neuerKontostand = neuerKontostand
+									+ gesamteDividendeDieserAktie;
+						}
 					}
+
+					benutzerDao.kontostandAktualisieren(neuerKontostand,
+							benutzer.getBenutzerIDAsInt());
 				}
-				
-				benutzerDao.kontostandAktualisieren(neuerKontostand, benutzer.getBenutzerIDAsInt());
+
 			}
 		}
-						
+
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
