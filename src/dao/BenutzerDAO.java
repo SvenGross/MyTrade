@@ -67,38 +67,53 @@ public class BenutzerDAO extends MyTradeDAO {
 
 	public boolean addUser(Benutzer benutzer) {
 
-		String sqlBenutzerHinzufügen = "INSERT INTO users"
-				+ "(firstname, lastname, username, password, administrator, account_balance) VALUES"
-				+ "(?,?,?,?)";
-
-		Integer accountBalance = new Integer(null);
-		int administrator;
-		
-		if (benutzer.isAdministrator() == false){
-			accountBalance = 10000;
-			administrator = 0;
-		} else {
-			accountBalance = null;
-			administrator = 1;
-		}
-		
-		con = getConnection();
 
 		try {
-
-			PreparedStatement preparedStatement = con.prepareStatement(sqlBenutzerHinzufügen);
 			
+		con = getConnection();
+		
+		if (benutzer.isAdministrator() == false){
+
+			String sqlBenutzerHinzufügen = "INSERT INTO users"
+					+ "(firstname, lastname, username, password, administrator, account_balance) VALUES"
+					+ "(?,?,?,SHA1(?),?,?)";
+			
+			PreparedStatement preparedStatement = con.prepareStatement(sqlBenutzerHinzufügen);
+
 			preparedStatement.setString(1, benutzer.getVorname());
 			preparedStatement.setString(2, benutzer.getNachname());
 			preparedStatement.setString(3, benutzer.getBenutzername());
 			preparedStatement.setString(4, benutzer.getPasswort());
-			preparedStatement.setInt(5, administrator);
-			preparedStatement.setInt(6, accountBalance);
-
+			preparedStatement.setBoolean(5, false);
+			preparedStatement.setInt(6, 10000);
+			
 			preparedStatement.executeUpdate();
-
+			
 			returnConnection(con);
 			preparedStatement.close();
+
+
+		} else {
+
+			String sqlBenutzerHinzufügen = "INSERT INTO users"
+					+ "(firstname, lastname, username, password, administrator) VALUES"
+					+ "(?,?,?,SHA1(?),?)";
+			
+			PreparedStatement preparedStatement = con.prepareStatement(sqlBenutzerHinzufügen);
+
+			preparedStatement.setString(1, benutzer.getVorname());
+			preparedStatement.setString(2, benutzer.getNachname());
+			preparedStatement.setString(3, benutzer.getBenutzername());
+			preparedStatement.setString(4, benutzer.getPasswort());
+			preparedStatement.setBoolean(5, true);
+			
+			preparedStatement.executeUpdate();
+			
+			returnConnection(con);
+			preparedStatement.close();
+		
+		}
+
 		} catch (SQLException e) {
 			System.err
 			.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'addUser' aufgetreten.");
