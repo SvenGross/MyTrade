@@ -34,8 +34,6 @@ public class LoginFormBean {
 			
 			if(benutzerDAO.getUserDataByID(benutzerID).isAdministrator())
 			{
-
-				System.err.println("BENUTZERDAO administration");
 				return "administration?faces-redirect=true";
 			}
 			else 
