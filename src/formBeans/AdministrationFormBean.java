@@ -40,6 +40,11 @@ public class AdministrationFormBean {
 		ArrayList<Benutzer> alleBenutzer = benutzerDao.getAllUsers();
 		ArrayList<Aktie> alleAktien = aktieDao.selectAlleAktien();
 
+		/*
+		 * Hier wird für jede Aktie einzeln eine 
+		 * neue Dividende ausgerechnet und 
+		 * in der DB eingetragen
+		 */
 		if (alleAktien != null) {
 
 			for (Aktie aktie : alleAktien) {
@@ -56,7 +61,15 @@ public class AdministrationFormBean {
 						+ " Dividende wurde ausbezahlt.");
 			}
 		}
+		
 		System.out.println("----------- Übergang zu Benutzer");
+		
+		/*
+		 * Hier wird über jeden Benutzer iteriert und
+		 * seine ganze Aktienliste von der DB abgefragt
+		 * und ihm dann die neue Dividende * Anzahl Aktien ausbezahlt
+		 * und dem aktuellen Kontostand gutgeschrieben
+		 */
 		if (alleBenutzer != null) {
 
 			for (Benutzer benutzer : alleBenutzer) {
