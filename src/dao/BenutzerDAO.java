@@ -230,7 +230,7 @@ public class BenutzerDAO extends MyTradeDAO {
 		}
 	}
 
-	public synchronized double getKontostand(int userID) {
+	public synchronized double getKontostand(int benutzerID) {
 
 		try {
 
@@ -238,7 +238,7 @@ public class BenutzerDAO extends MyTradeDAO {
 
 			con = getConnection();
 			stmt = con.createStatement();
-			rs = stmt.executeQuery("SELECT account_balance FROM users WHERE userID = '" + userID + "'");
+			rs = stmt.executeQuery("SELECT account_balance FROM users WHERE userID = '" + benutzerID + "'");
 
 			while (rs.next()) {
 				kontostand = rs.getDouble("account_balance");
@@ -273,6 +273,31 @@ public class BenutzerDAO extends MyTradeDAO {
 				returnConnection(con);
 				return false;
 			}
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'kontostandAktualisieren' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return false;
+		}
+	}
+
+	public synchronized boolean isBenutzerAdmin(int benutzerID) {
+		
+		try {
+			boolean administrator = false;
+			con = getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT administrator FROM users WHERE userID = '" + benutzerID + "'");
+
+			if(rs.next()) {
+				administrator = rs.getBoolean("administrator");
+			}
+
+			rs.close();
+			stmt.close();
+			returnConnection(con);
+			return administrator;
 
 		} catch (Exception e) {
 			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'kontostandAktualisieren' aufgetreten.");

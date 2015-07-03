@@ -158,13 +158,6 @@ public class AuftragDAO extends MyTradeDAO {
 	public synchronized boolean auftraegeAusfuehren() {
 		
 		try {
-			con = getConnection();
-			
-			stmt = con.createStatement();
-			rs = stmt.executeQuery("SELECT orderID, userFK, stockFK, quantity, price_per_share "
-					+ "FROM orders "
-					+ "WHERE typeFK = '1' "
-					+ "ORDER BY creation_date ASC");
 			
 			double gesamtsumme = 0;
 			int stueck = 0;
@@ -180,6 +173,15 @@ public class AuftragDAO extends MyTradeDAO {
 			int verkauf_stueck;
 			double verkauf_preis;
 			
+			con = getConnection();
+			
+			//Alle offenen Kaufaufträge selektieren
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT orderID, userFK, stockFK, quantity, price_per_share "
+					+ "FROM orders "
+					+ "WHERE typeFK = '1' "
+					+ "ORDER BY creation_date ASC");
+			
 			while(rs.next()) {
 				kauf_auftragsID = rs.getInt("orderID");
 				kauf_benutzerID = rs.getInt("userFK");
@@ -187,6 +189,7 @@ public class AuftragDAO extends MyTradeDAO {
 				kauf_stueck     = rs.getInt("quantity");
 				kauf_preis      = rs.getDouble("price_per_share");
 				
+				//Alle passenden Verkaufsaufträge zu Kaufauftrag selektieren (Preis kleiner oder gleich was Benutzer zahlen würde)
 				Statement stmt2 = con.createStatement();
 				ResultSet rs2 = stmt2.executeQuery("SELECT orderID, userFK, quantity, price_per_share "
 					+ "FROM orders "
@@ -201,12 +204,14 @@ public class AuftragDAO extends MyTradeDAO {
 					verkauf_stueck     = rs2.getInt("quantity");
 					verkauf_preis      = rs2.getDouble("price_per_share");
 					
+					//Aktien zum Verkaufsauftrag selektieren
 					Statement stmt3 = con.createStatement();
 					ResultSet rs3 = stmt3.executeQuery("SELECT stock_poolID "
 						+ "FROM stock_pool "
 						+ "WHERE orderFK = '" + verkauf_auftragsID + "' "
 						+ "ORDER BY price ASC");
 					
+					int newOrderQuantity = verkauf_stueck;
 					while(rs3.next()) {
 						if(stueck < kauf_stueck) {
 							int verkauf_akitenEintragID = rs3.getInt("stock_poolID");
@@ -215,12 +220,21 @@ public class AuftragDAO extends MyTradeDAO {
 								+ "orderFK = NULL "
 								+ "WHERE stock_poolID = '" + verkauf_akitenEintragID + "'");
 							
-							int newOrderQuantity = verkauf_stueck - 1;
+							newOrderQuantity = newOrderQuantity - 1;
 							con.createStatement().executeUpdate("UPDATE orders SET quantity = '" + newOrderQuantity + "' "
 									+ "WHERE orderID = '" + verkauf_auftragsID + "'");
 							
+							//Falls NICHT Administrator -> Kontostand aktualisieren
+							BenutzerDAO benutzerDAO = new BenutzerDAO();
+							if(!benutzerDAO.isBenutzerAdmin(verkauf_benutzerID)) {
+								benutzerDAO.kontostandAktualisieren((benutzerDAO.getKontostand(verkauf_benutzerID) + verkauf_preis), verkauf_benutzerID);
+							}
+							
 							gesamtsumme = gesamtsumme + verkauf_preis;
 							stueck++;
+						}
+						else {
+							break;
 						}
 					}
 					
@@ -232,9 +246,14 @@ public class AuftragDAO extends MyTradeDAO {
 				con.createStatement().executeUpdate("UPDATE orders SET quantity = '" + newOrderQuantity + "' "
 						+ "WHERE orderID = '" + kauf_auftragsID + "'");
 				
+				BenutzerDAO benutzerDAO = new BenutzerDAO();
+				benutzerDAO.kontostandAktualisieren((benutzerDAO.getKontostand(kauf_benutzerID) - gesamtsumme), kauf_benutzerID);
+				
 				stmt2.close();
 				rs2.close();
 			}
+			
+			ausgefuehrteAuftraegeLoeschen();
 			
 			rs.close();
 			stmt.close();
@@ -246,6 +265,21 @@ public class AuftragDAO extends MyTradeDAO {
 			e.printStackTrace();
 			returnConnection(con);
 			return false;
+		}
+	}
+	
+	public synchronized void ausgefuehrteAuftraegeLoeschen() {
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM orders WHERE quantity = '0'");
+			stmt.close();
+			returnConnection(con);
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'ausgefuehrteAuftraegeLoeschen' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
 		}
 	}
 }
