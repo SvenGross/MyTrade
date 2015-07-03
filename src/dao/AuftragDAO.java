@@ -144,6 +144,7 @@ public class AuftragDAO extends MyTradeDAO {
 			}
 			
 			returnConnection(con);
+			auftraegeAusfuehren();
 			return true;
 
 		} catch (Exception e) {
@@ -162,17 +163,80 @@ public class AuftragDAO extends MyTradeDAO {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("SELECT orderID, userFK, stockFK, quantity, price_per_share "
 					+ "FROM orders "
-					+ "WHERE  "
+					+ "WHERE typeFK = '1' "
 					+ "ORDER BY creation_date ASC");
 			
+			double gesamtsumme = 0;
+			int stueck = 0;
+			
+			int kauf_auftragsID;
+			int kauf_benutzerID;
+			int aktienID;
+			int kauf_stueck;
+			double kauf_preis;
+			
+			int verkauf_auftragsID;
+			int verkauf_benutzerID;
+			int verkauf_stueck;
+			double verkauf_preis;
+			
 			while(rs.next()) {
-				int auftragsID = rs.getInt("orderID");
-				int benutzerID = rs.getInt("userFK");
-				int aktienID   = rs.getInt("stockFK");
-				int stueck     = rs.getInt("quantity");
-				double preis   = rs.getDouble("price_per_share");
+				kauf_auftragsID = rs.getInt("orderID");
+				kauf_benutzerID = rs.getInt("userFK");
+				aktienID        = rs.getInt("stockFK");
+				kauf_stueck     = rs.getInt("quantity");
+				kauf_preis      = rs.getDouble("price_per_share");
+				
+				Statement stmt2 = con.createStatement();
+				ResultSet rs2 = stmt2.executeQuery("SELECT orderID, userFK, quantity, price_per_share "
+					+ "FROM orders "
+					+ "WHERE typeFK = '2' AND "
+					+ "price_per_share <= '" + kauf_preis + "' AND "
+					+ "stockFK = '" + aktienID + "' "
+					+ "ORDER BY creation_date ASC");
+				
+				while(rs2.next()) {
+					verkauf_auftragsID = rs2.getInt("orderID");
+					verkauf_benutzerID = rs2.getInt("userFK");
+					verkauf_stueck     = rs2.getInt("quantity");
+					verkauf_preis      = rs2.getDouble("price_per_share");
+					
+					Statement stmt3 = con.createStatement();
+					ResultSet rs3 = stmt3.executeQuery("SELECT stock_poolID "
+						+ "FROM stock_pool "
+						+ "WHERE orderFK = '" + verkauf_auftragsID + "' "
+						+ "ORDER BY price ASC");
+					
+					while(rs3.next()) {
+						if(stueck < kauf_stueck) {
+							int verkauf_akitenEintragID = rs3.getInt("stock_poolID");
+							
+							con.createStatement().executeUpdate("UPDATE stock_pool SET ownerFK = '" + kauf_benutzerID + "', "
+								+ "orderFK = NULL "
+								+ "WHERE stock_poolID = '" + verkauf_akitenEintragID + "'");
+							
+							int newOrderQuantity = verkauf_stueck - 1;
+							con.createStatement().executeUpdate("UPDATE orders SET quantity = '" + newOrderQuantity + "' "
+									+ "WHERE orderID = '" + verkauf_auftragsID + "'");
+							
+							gesamtsumme = gesamtsumme + verkauf_preis;
+							stueck++;
+						}
+					}
+					
+					stmt3.close();
+					rs3.close();
+				}
+				
+				int newOrderQuantity = kauf_stueck - stueck;
+				con.createStatement().executeUpdate("UPDATE orders SET quantity = '" + newOrderQuantity + "' "
+						+ "WHERE orderID = '" + kauf_auftragsID + "'");
+				
+				stmt2.close();
+				rs2.close();
 			}
 			
+			rs.close();
 			stmt.close();
 			returnConnection(con);
 			return true;
