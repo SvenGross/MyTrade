@@ -75,16 +75,15 @@ public class AktieDAO extends MyTradeDAO {
 			int count = 0;
 			
 			String sqlAktienEinzelnHinzufügen = "INSERT INTO stock_pool"
-					+ "(stockFK, price, ownerFK) VALUES"
-					+ "(?,?,?)";
+					+ "(stockFK, ownerFK) VALUES"
+					+ "(?,?)";
 
 			PreparedStatement preparedStatement = con.prepareStatement(sqlAktienEinzelnHinzufügen);
 
 			while (count < aktienAnzahl) {
 
 				preparedStatement.setInt(1, stockIDForForeignKey);
-				preparedStatement.setDouble(2, aktienPreis);
-				preparedStatement.setInt(3, ((Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("angemeldeterBenutzer")).getBenutzerIDAsInt());
+				preparedStatement.setInt(2, ((Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("angemeldeterBenutzer")).getBenutzerIDAsInt());
 
 				preparedStatement.executeUpdate();
 				
