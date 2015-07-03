@@ -15,6 +15,10 @@ import model.Aktie;
 import model.Benutzer;
 import model.KonstantenSession;
 
+/**
+ *@date 25.6.2015 - 3.7.2015
+ *@author sacha weiersmueller, siro duschletta und sven gross 
+ */
 public class AktieDAO extends MyTradeDAO {
 
 	private Connection con = null;
