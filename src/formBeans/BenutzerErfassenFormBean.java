@@ -12,6 +12,10 @@ import model.KonstantenSession;
 import dao.BenutzerDAO;
 import error.Meldungen;
 
+/**
+ * @date 25.6.2015 - 3.7.2015
+ * @author sacha weiersmueller, siro duschletta und sven gross
+ */
 @ManagedBean
 @SessionScoped
 public class BenutzerErfassenFormBean {

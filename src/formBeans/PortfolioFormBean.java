@@ -14,7 +14,10 @@ import model.Benutzer;
 import model.KonstantenSession;
 import dao.AktieDAO;
 
-
+/**
+ * @date 25.6.2015 - 3.7.2015
+ * @author sacha weiersmueller, siro duschletta und sven gross
+ */
 @ManagedBean
 @SessionScoped
 public class PortfolioFormBean {
