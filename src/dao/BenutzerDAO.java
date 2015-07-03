@@ -69,58 +69,52 @@ public class BenutzerDAO extends MyTradeDAO {
 
 
 		try {
+			PreparedStatement preparedStatement;
+			con = getConnection();
 			
-		con = getConnection();
-		
-		if (benutzer.isAdministrator() == false){
-
-			String sqlBenutzerHinzufügen = "INSERT INTO users"
-					+ "(firstname, lastname, username, password, administrator, account_balance) VALUES"
-					+ "(?,?,?,SHA1(?),?,?)";
+			if (benutzer.isAdministrator() == false){
+	
+				String sqlBenutzerHinzufügen = "INSERT INTO users"
+						+ "(firstname, lastname, username, password, administrator, account_balance) VALUES"
+						+ "(?,?,?,SHA1(?),?,?)";
+				
+				preparedStatement = con.prepareStatement(sqlBenutzerHinzufügen);
+	
+				preparedStatement.setString(1, benutzer.getVorname());
+				preparedStatement.setString(2, benutzer.getNachname());
+				preparedStatement.setString(3, benutzer.getBenutzername());
+				preparedStatement.setString(4, benutzer.getPasswort());
+				preparedStatement.setBoolean(5, false);
+				preparedStatement.setInt(6, 10000);
+	
+	
+			} else {
+	
+				String sqlBenutzerHinzufügen = "INSERT INTO users"
+						+ "(firstname, lastname, username, password, administrator) VALUES"
+						+ "(?,?,?,SHA1(?),?)";
+				
+				preparedStatement = con.prepareStatement(sqlBenutzerHinzufügen);
+	
+				preparedStatement.setString(1, benutzer.getVorname());
+				preparedStatement.setString(2, benutzer.getNachname());
+				preparedStatement.setString(3, benutzer.getBenutzername());
+				preparedStatement.setString(4, benutzer.getPasswort());
+				preparedStatement.setBoolean(5, true);
 			
-			PreparedStatement preparedStatement = con.prepareStatement(sqlBenutzerHinzufügen);
-
-			preparedStatement.setString(1, benutzer.getVorname());
-			preparedStatement.setString(2, benutzer.getNachname());
-			preparedStatement.setString(3, benutzer.getBenutzername());
-			preparedStatement.setString(4, benutzer.getPasswort());
-			preparedStatement.setBoolean(5, false);
-			preparedStatement.setInt(6, 10000);
-			
-			preparedStatement.executeUpdate();
-			
-			returnConnection(con);
-			preparedStatement.close();
-
-
-		} else {
-
-			String sqlBenutzerHinzufügen = "INSERT INTO users"
-					+ "(firstname, lastname, username, password, administrator) VALUES"
-					+ "(?,?,?,SHA1(?),?)";
-			
-			PreparedStatement preparedStatement = con.prepareStatement(sqlBenutzerHinzufügen);
-
-			preparedStatement.setString(1, benutzer.getVorname());
-			preparedStatement.setString(2, benutzer.getNachname());
-			preparedStatement.setString(3, benutzer.getBenutzername());
-			preparedStatement.setString(4, benutzer.getPasswort());
-			preparedStatement.setBoolean(5, true);
+			}
 			
 			preparedStatement.executeUpdate();
-			
-			returnConnection(con);
 			preparedStatement.close();
-		
-		}
+			returnConnection(con);
+			return true;
 
 		} catch (SQLException e) {
-			System.err
-			.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'addUser' aufgetreten.");
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'addUser' aufgetreten.");
 			e.printStackTrace();
+			returnConnection(con);
+			return false;
 		}
-
-		return true;
 	}
 
 	public Benutzer getUserDataByID(int userID) {
@@ -131,11 +125,10 @@ public class BenutzerDAO extends MyTradeDAO {
 
 			con = getConnection();
 			stmt = con.createStatement();
-			rs = stmt
-					.executeQuery("SELECT userID, firstname, lastname, username, password, administrator, account_balance FROM users WHERE userID = '"
+			rs = stmt.executeQuery("SELECT userID, firstname, lastname, username, password, administrator, account_balance FROM users WHERE userID = '"
 							+ userID + "'");
 
-			while (rs.next()) {
+			if(rs.next()) {
 
 				String benutzerID = rs.getString("userID");
 				String vorname = rs.getString("firstname");
@@ -145,10 +138,7 @@ public class BenutzerDAO extends MyTradeDAO {
 				boolean administrator = rs.getBoolean("administrator");
 				double kontostand = rs.getDouble("account_balance");
 
-				benutzer = new Benutzer(benutzerID, vorname, nachname,
-						benutzername, passwort, administrator, kontostand);
-				return benutzer;
-
+				benutzer = new Benutzer(benutzerID, vorname, nachname, benutzername, passwort, administrator, kontostand);
 			}
 
 			rs.close();
@@ -157,8 +147,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			return benutzer;
 
 		} catch (Exception e) {
-			System.err
-					.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
 			e.printStackTrace();
 			returnConnection(con);
 			return null;
@@ -198,10 +187,8 @@ public class BenutzerDAO extends MyTradeDAO {
 			return true;
 
 		} catch (Exception e) {
-			System.err
-					.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'benutzerSpeichern' aufgetreten.");
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'benutzerSpeichern' aufgetreten.");
 			e.printStackTrace();
-
 			returnConnection(con);
 			return false;
 		}
@@ -215,8 +202,7 @@ public class BenutzerDAO extends MyTradeDAO {
 
 			con = getConnection();
 			stmt = con.createStatement();
-			rs = stmt
-					.executeQuery("SELECT userID, firstname, lastname, username, password, administrator, account_balance FROM users");
+			rs = stmt.executeQuery("SELECT userID, firstname, lastname, username, password, administrator, account_balance FROM users");
 
 			while (rs.next()) {
 
@@ -228,8 +214,7 @@ public class BenutzerDAO extends MyTradeDAO {
 				boolean administrator = rs.getBoolean("administrator");
 				double kontostand = rs.getDouble("account_balance");
 
-				Benutzer benutzer = new Benutzer(benutzerID, vorname, nachname,
-						benutzername, passwort, administrator, kontostand);
+				Benutzer benutzer = new Benutzer(benutzerID, vorname, nachname, benutzername, passwort, administrator, kontostand);
 				alleBenutzer.add(benutzer);
 
 			}
@@ -240,8 +225,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			return alleBenutzer;
 
 		} catch (Exception e) {
-			System.err
-					.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getAllUsers' aufgetreten.");
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getAllUsers' aufgetreten.");
 			e.printStackTrace();
 			returnConnection(con);
 			return null;
@@ -257,9 +241,7 @@ public class BenutzerDAO extends MyTradeDAO {
 
 			con = getConnection();
 			stmt = con.createStatement();
-			rs = stmt
-					.executeQuery("SELECT account_balance FROM users WHERE userID = '"
-							+ userID + "'");
+			rs = stmt.executeQuery("SELECT account_balance FROM users WHERE userID = '" + userID + "'");
 
 			while (rs.next()) {
 				kontostand = rs.getDouble("account_balance");
@@ -271,8 +253,7 @@ public class BenutzerDAO extends MyTradeDAO {
 			return kontostand;
 
 		} catch (Exception e) {
-			System.err
-					.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
+			System.err.println("FEHLER:     dao.BenutzerDAO     Es ist ein Fehler in der Methode 'getUserDataByID' aufgetreten.");
 			e.printStackTrace();
 			returnConnection(con);
 			return 0;

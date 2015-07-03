@@ -13,8 +13,8 @@ import model.KonstantenSession;
 @SessionScoped
 public class Meldungen {
 
-	private static ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-	public  Map<String, Object> sessionMap  = externalContext.getSessionMap();
+	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	private Map<String, Object> sessionMap  = externalContext.getSessionMap();
 
 	public static String AKTIE_ERSTELLEN        = "Die Aktie wurde erfolgreich gespeichert: ";
 	public static String DIVIDENDE_AUSSCHUETTEN = "Die Dividende wurde erfolgreich ausgeschüttet.";
