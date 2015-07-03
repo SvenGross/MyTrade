@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 03. Jul 2015 um 15:25
+-- Erstellungszeit: 03. Jul 2015 um 15:50
 -- Server-Version: 5.6.24
 -- PHP-Version: 5.5.24
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `stock_data` (
   `name` varchar(30) NOT NULL,
   `nominal_price` double NOT NULL,
   `last_dividend` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -78,10 +78,9 @@ CREATE TABLE IF NOT EXISTS `stock_data` (
 CREATE TABLE IF NOT EXISTS `stock_pool` (
   `stock_poolID` bigint(20) NOT NULL,
   `stockFK` bigint(20) NOT NULL,
-  `price` double NOT NULL,
   `ownerFK` bigint(20) NOT NULL,
   `orderFK` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -106,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`userID`, `firstname`, `lastname`, `username`, `password`, `administrator`, `account_balance`) VALUES
 (1, 'Siro', 'Duschletta', 't137', '57a908a0a0e5886f60a93c44be96060bcfaf38c5', 1, NULL),
 (2, 'Sacha', 'Weiersmüller', 'tj33', 'aba1ccfc224594bfc5be4f072b32d59ca54f6c33', 0, 10000),
-(3, 'Sven', 'Gross', 't948', '2b12f8c0b9a31140235d3dc9da1c0587ea7c0860', 0, 10000);
+(3, 'Sven', 'Gross', 't948', '2b12f8c0b9a31140235d3dc9da1c0587ea7c0860', 0, 9815.5);
 
 --
 -- Indizes der exportierten Tabellen
@@ -160,12 +159,12 @@ ALTER TABLE `order_types`
 -- AUTO_INCREMENT für Tabelle `stock_data`
 --
 ALTER TABLE `stock_data`
-  MODIFY `stockID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `stockID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT für Tabelle `stock_pool`
 --
 ALTER TABLE `stock_pool`
-  MODIFY `stock_poolID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
+  MODIFY `stock_poolID` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `users`
 --
