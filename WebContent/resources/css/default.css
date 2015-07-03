@@ -71,6 +71,7 @@ body {
 
 .table {
 	width: 100%;
+	background-color: #ccc;
 }
 
 /**************************** 
@@ -229,4 +230,15 @@ body {
 
 #guthaben {
 	left: 180px;
+}
+
+/******************************************* 
+* Settings für die Seite "portfolio"  *
+*                                          *
+*******************************************/
+#aktienListe {
+	width: 95%;
+  	height: 70%;
+  	position: relative;
+  	margin: 0px auto;
 }

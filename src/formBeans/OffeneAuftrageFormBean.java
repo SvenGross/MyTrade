@@ -39,6 +39,6 @@ public class OffeneAuftrageFormBean {
 	public void auftragStornieren(int auftragsID) {
 		AuftragDAO auftragDAO = new AuftragDAO();
 		auftragDAO.auftragStornieren(auftragsID);
-		sessionMap.put(KonstantenSession.MELDUNG, Meldungen.AUFTRAG_STORNIEREN + auftragsID);
+		sessionMap.put(KonstantenSession.MELDUNG, Meldungen.AUFTRAG_STORNIEREN);
 	}
 }

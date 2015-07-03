@@ -24,7 +24,7 @@ public class Meldungen {
 	public static String DIVIDENDE_AUSSCHUETTEN = "Die Dividende wurde erfolgreich ausgeschüttet.";
 	public static String BENUTZER_ANLEGEN       = "Der Benutzer wurde erfolgreich angelegt: ";
 	public static String AUFTRAG_ERFASSEN       = "Der Auftrag wurde erfolgreich erfasst: ";
-	public static String AUFTRAG_STORNIEREN     = "Der Auftrag wurde erfolgreich storniert: ";
+	public static String AUFTRAG_STORNIEREN     = "Der Auftrag wurde erfolgreich storniert.";
 	
 	public Meldungen() {
 		sessionMap.put(KonstantenSession.MELDUNG, "");
