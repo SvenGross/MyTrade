@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import model.Benutzer;
 
 /**
- * @version 0.1 (May 29, 2015)
- * @author Sven Gross
+ * @date 25.6.2015 - 3.7.2015
+ * @author sacha weiersmueller, siro duschletta und sven gross
  */
 public class BenutzerDAO extends MyTradeDAO {
 
