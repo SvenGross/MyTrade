@@ -12,7 +12,7 @@ public class Benutzer {
 	private boolean administrator;
 	private double kontostand;
 	
-	public Benutzer(String vorname, String nachname, String benutzername, String passwort, boolean administrator, double kontostand) {
+	public Benutzer(String nachname, String vorname, String benutzername, String passwort, boolean administrator, double kontostand) {
 		
 		this.vorname = vorname;
 		this.nachname = nachname;
