@@ -131,7 +131,6 @@ public class AuftragDAO extends MyTradeDAO {
 						+ "WHERE orderFK IS NULL AND "
 						+ "stockFK = '" + aktienID + "' AND "
 						+ "ownerFK = '" + benutzerID + "' "
-						+ "ORDER BY price ASC "
 						+ "LIMIT " + anzahl);
 
 				while (rs3.next()) {
@@ -198,7 +197,7 @@ public class AuftragDAO extends MyTradeDAO {
 					+ "stockFK = '" + aktienID + "' "
 					+ "ORDER BY creation_date ASC");
 				
-				while(rs2.next()) {
+				while(rs2.next() && stueck < kauf_stueck) {
 					verkauf_auftragsID = rs2.getInt("orderID");
 					verkauf_benutzerID = rs2.getInt("userFK");
 					verkauf_stueck     = rs2.getInt("quantity");
@@ -208,35 +207,29 @@ public class AuftragDAO extends MyTradeDAO {
 					Statement stmt3 = con.createStatement();
 					ResultSet rs3 = stmt3.executeQuery("SELECT stock_poolID "
 						+ "FROM stock_pool "
-						+ "WHERE orderFK = '" + verkauf_auftragsID + "' "
-						+ "ORDER BY price ASC");
+						+ "WHERE orderFK = '" + verkauf_auftragsID + "'");
 					
 					int newOrderQuantity = verkauf_stueck;
-					while(rs3.next()) {
-						if(stueck < kauf_stueck) {
-							int verkauf_akitenEintragID = rs3.getInt("stock_poolID");
-							
-							con.createStatement().executeUpdate("UPDATE stock_pool SET ownerFK = '" + kauf_benutzerID + "', "
-								+ "orderFK = NULL "
-								+ "WHERE stock_poolID = '" + verkauf_akitenEintragID + "'");
-							
-							newOrderQuantity = newOrderQuantity - 1;
-							con.createStatement().executeUpdate("UPDATE orders SET quantity = '" + newOrderQuantity + "' "
-									+ "WHERE orderID = '" + verkauf_auftragsID + "'");
-							
-							//Falls NICHT Administrator -> Kontostand aktualisieren
-							BenutzerDAO benutzerDAO = new BenutzerDAO();
-							if(!benutzerDAO.isBenutzerAdmin(verkauf_benutzerID)) {
-								benutzerDAO.kontostandAktualisieren((benutzerDAO.getKontostand(verkauf_benutzerID) + verkauf_preis), verkauf_benutzerID);
-							}
-							
-							//Gesamtsumme für Kontostandänderung Käufer berechnen
-							gesamtsumme = gesamtsumme + verkauf_preis;
-							stueck++;
+					while(rs3.next() && stueck < kauf_stueck) {
+						int verkauf_akitenEintragID = rs3.getInt("stock_poolID");
+						
+						con.createStatement().executeUpdate("UPDATE stock_pool SET ownerFK = '" + kauf_benutzerID + "', "
+							+ "orderFK = NULL "
+							+ "WHERE stock_poolID = '" + verkauf_akitenEintragID + "'");
+						
+						newOrderQuantity = newOrderQuantity - 1;
+						con.createStatement().executeUpdate("UPDATE orders SET quantity = '" + newOrderQuantity + "' "
+								+ "WHERE orderID = '" + verkauf_auftragsID + "'");
+						
+						//Falls NICHT Administrator -> Kontostand aktualisieren
+						BenutzerDAO benutzerDAO = new BenutzerDAO();
+						if(!benutzerDAO.isBenutzerAdmin(verkauf_benutzerID)) {
+							benutzerDAO.kontostandAktualisieren((benutzerDAO.getKontostand(verkauf_benutzerID) + verkauf_preis), verkauf_benutzerID);
 						}
-						else {
-							break;
-						}
+						
+						//Gesamtsumme für Kontostandänderung Käufer berechnen
+						gesamtsumme = gesamtsumme + verkauf_preis;
+						stueck++;
 					}
 					
 					stmt3.close();

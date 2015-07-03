@@ -49,6 +49,10 @@ public class AuftragErfassenFormBean {
 			name = aktie.getName();
 			preis = aktie.getPreis();
 			maxStueck = aktieDAO.selectAnzahlAktienDesBenutzers(aktienID);
+			
+			if(Double.valueOf(preis).isNaN()) {
+				preis = 0;
+			}
 		}
 		else {
 			setAuftragVerkauf(false);
