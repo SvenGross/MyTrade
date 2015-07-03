@@ -48,9 +48,7 @@ public class AktieDAO extends MyTradeDAO {
 				preparedStatement.setDouble(4, aktienDividende);
 				
 				preparedStatement.executeUpdate();
-				
 				preparedStatement.close();
-				returnConnection(con);
 
 				try {
 					stmt = con.createStatement();
@@ -66,19 +64,15 @@ public class AktieDAO extends MyTradeDAO {
 				} catch (SQLException e) {
 					e.printStackTrace();
 					returnConnection(con);
-				} finally{
-					returnConnection(con);
 				}
 				
 			}
 
 			int count = 0;
-
+			
 			String sqlAktienEinzelnHinzufügen = "INSERT INTO stock_pool"
 					+ "(stockFK, price, ownerFK) VALUES"
 					+ "(?,?,?)";
-
-			con = getConnection();
 
 			PreparedStatement preparedStatement = con.prepareStatement(sqlAktienEinzelnHinzufügen);
 
@@ -92,9 +86,10 @@ public class AktieDAO extends MyTradeDAO {
 				
 				count = count + 1;
 			}
+			
 			preparedStatement.close();
 			returnConnection(con);
-
+			
 			return true;
 
 		} catch (Exception e) {

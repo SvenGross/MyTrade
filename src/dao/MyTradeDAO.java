@@ -12,12 +12,7 @@ public class MyTradeDAO {
 		conPool = MyTradeConnectionPool.getInstance(1, 5);
 		
 		Connection con = conPool.getConnection();
-		if(con != null) {
-			return con;
-		}
-		else {
-			return null;
-		}
+		return con;
 		
 	}
 	
