@@ -230,6 +230,7 @@ public class AuftragDAO extends MyTradeDAO {
 								benutzerDAO.kontostandAktualisieren((benutzerDAO.getKontostand(verkauf_benutzerID) + verkauf_preis), verkauf_benutzerID);
 							}
 							
+							//Gesamtsumme für Kontostandänderung Käufer berechnen
 							gesamtsumme = gesamtsumme + verkauf_preis;
 							stueck++;
 						}
@@ -242,10 +243,12 @@ public class AuftragDAO extends MyTradeDAO {
 					rs3.close();
 				}
 				
+				//Kaufauftrag gekaufte Anzahl Aktien abziehen
 				int newOrderQuantity = kauf_stueck - stueck;
 				con.createStatement().executeUpdate("UPDATE orders SET quantity = '" + newOrderQuantity + "' "
 						+ "WHERE orderID = '" + kauf_auftragsID + "'");
 				
+				//Kontostand des Käufers aktualisieren
 				BenutzerDAO benutzerDAO = new BenutzerDAO();
 				benutzerDAO.kontostandAktualisieren((benutzerDAO.getKontostand(kauf_benutzerID) - gesamtsumme), kauf_benutzerID);
 				
@@ -253,6 +256,7 @@ public class AuftragDAO extends MyTradeDAO {
 				rs2.close();
 			}
 			
+			//Aufträge mit neu Anzahl Aktien 0 löschen
 			ausgefuehrteAuftraegeLoeschen();
 			
 			rs.close();
