@@ -231,3 +231,14 @@ body {
 #guthaben {
 	left: 180px;
 }
+
+/******************************************* 
+* Settings für die Seite "portfolio"  *
+*                                          *
+*******************************************/
+#aktienListe {
+	width: 95%;
+  	height: 70%;
+  	position: relative;
+  	margin: 0px auto;
+}
