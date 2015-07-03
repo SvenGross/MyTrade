@@ -22,14 +22,6 @@ public class Auftrag {
 		this.preis = preis;
 	}
 
-	public String back() {
-		return "aktieErfassen?faces-redirect=true";
-	}
-	
-	public void save() {
-		//TODO
-	}
-
 	public int getAuftragsID() {
 		return auftragsID;
 	}
@@ -77,5 +69,4 @@ public class Auftrag {
 	public void setPreis(double preis) {
 		this.preis = preis;
 	}
-	
 }

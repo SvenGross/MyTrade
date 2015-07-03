@@ -26,20 +26,14 @@ public class Meldungen {
 	public static String AUFTRAG_ERFASSEN       = "Der Auftrag wurde erfolgreich erfasst: ";
 	public static String AUFTRAG_STORNIEREN     = "Der Auftrag wurde erfolgreich storniert: ";
 	
-	//TODO DONE: dividende ausschuetten
-//				 aktie erstellen
-//				benutzer anlegen
-//				auftrag stornieren
-//				auftrag erfassen
-	
-	
 	public Meldungen() {
 		sessionMap.put(KonstantenSession.MELDUNG, "");
 	}
-	public String printFehler() {
+	
+	public String printMeldung() {
 		
-		String fehlerMeldung = (String) sessionMap.get(KonstantenSession.MELDUNG);
+		String meldung = (String) sessionMap.get(KonstantenSession.MELDUNG);
 		sessionMap.put(KonstantenSession.MELDUNG, "");
-		return fehlerMeldung;
+		return meldung;
 	}
 }

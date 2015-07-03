@@ -18,12 +18,10 @@ public class MyTradeDAO {
 		
 		Connection con = conPool.getConnection();
 		return con;
-		
 	}
 	
 	public synchronized void returnConnection(Connection con) {
 		MyTradeConnectionPool conPool = MyTradeConnectionPool.getInstance(KonstantenSession.MIN_CONNECTIONS, KonstantenSession.MAX_CONNECTIONS);
 		conPool.putConnection(con);
 	}
-	
 }
