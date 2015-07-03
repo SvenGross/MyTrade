@@ -13,11 +13,10 @@
 			</div>
 			<div id="auftrage">
 				<h:outputLink value="offeneAuftrage.xhtml" rendered="${!angemeldeterBenutzer.administrator}">Aufträge</h:outputLink>
-				<br/>
-				<h:outputLink value="auftragErfassen.xhtml" rendered="${!angemeldeterBenutzer.administrator}">Neuer Auftrag</h:outputLink>
 			</div>
 			<div id="admin">
 				<h:outputLink value="administration.xhtml" rendered="${angemeldeterBenutzer.administrator}">Administration</h:outputLink>
+				<h:outputLink value="auftragErfassen.xhtml" rendered="${!angemeldeterBenutzer.administrator}">Neuer Auftrag</h:outputLink>
 			</div>
 			<div id="user">
 				<h:commandButton value="Logout (${angemeldeterBenutzer.vorname} ${angemeldeterBenutzer.nachname})" action="${loginFormBean.abmelden()}"></h:commandButton>
