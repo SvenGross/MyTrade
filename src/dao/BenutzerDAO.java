@@ -65,7 +65,7 @@ public class BenutzerDAO extends MyTradeDAO {
 
 	}
 
-	public boolean addUser(Benutzer benutzer) {
+	public synchronized boolean addUser(Benutzer benutzer) {
 
 
 		try {
@@ -117,7 +117,7 @@ public class BenutzerDAO extends MyTradeDAO {
 		}
 	}
 
-	public Benutzer getUserDataByID(int userID) {
+	public synchronized Benutzer getUserDataByID(int userID) {
 
 		try {
 
@@ -155,7 +155,7 @@ public class BenutzerDAO extends MyTradeDAO {
 
 	}
 
-	public boolean benutzerHinzufuegen(Benutzer benutzer) {
+	public synchronized boolean benutzerHinzufuegen(Benutzer benutzer) {
 
 		try {
 
@@ -194,7 +194,7 @@ public class BenutzerDAO extends MyTradeDAO {
 		}
 	}
 
-	public ArrayList<Benutzer> getAllUsers() {
+	public synchronized ArrayList<Benutzer> getAllUsers() {
 
 		try {
 
@@ -233,7 +233,7 @@ public class BenutzerDAO extends MyTradeDAO {
 
 	}
 
-	public double getKontostand(int userID) {
+	public synchronized double getKontostand(int userID) {
 
 		try {
 
@@ -260,7 +260,7 @@ public class BenutzerDAO extends MyTradeDAO {
 		}
 	}
 
-	public boolean kontostandAktualisieren(double kontostand, int userID) {
+	public synchronized boolean kontostandAktualisieren(double kontostand, int userID) {
 		
 		try {
 			con = getConnection();

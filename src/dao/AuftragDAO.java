@@ -63,7 +63,7 @@ public class AuftragDAO extends MyTradeDAO {
 		}
 	}
 	
-	public boolean auftragStornieren(int auftragsID) {
+	public synchronized boolean auftragStornieren(int auftragsID) {
 		try {
 
 			con = getConnection();
@@ -89,7 +89,7 @@ public class AuftragDAO extends MyTradeDAO {
 		}
 	}
 	
-	public boolean auftragErfassen(int aktienID, int anzahl, double preis, int type) {
+	public synchronized boolean auftragErfassen(int aktienID, int anzahl, double preis, int type) {
 		
 		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
 		
@@ -150,17 +150,25 @@ public class AuftragDAO extends MyTradeDAO {
 		}
 	}
 	
-	public boolean auftraegeAusfuehren(int aktienID, int anzahl, double preis, int type) {
-		
-		//TODO
-		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
+	public synchronized boolean auftraegeAusfuehren() {
 		
 		try {
 			con = getConnection();
-			stmt = con.createStatement();
 			
-			stmt.execute("INSERT INTO orders (userFK, stockFK, quantity, price_per_share, typeFK) "
-					+ "VALUES('" + benutzerID + "', '" + aktienID + "', '" + anzahl + "', '" + preis + "', '" + type + "')");
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT orderID, userFK, stockFK, quantity, price_per_share "
+					+ "FROM orders "
+					+ "WHERE  "
+					+ "ORDER BY creation_date ASC");
+			
+			while(rs.next()) {
+				int auftragsID = rs.getInt("orderID");
+				int benutzerID = rs.getInt("userFK");
+				int aktienID   = rs.getInt("stockFK");
+				int stueck     = rs.getInt("quantity");
+				double preis   = rs.getDouble("price_per_share");
+			}
+			
 			stmt.close();
 			returnConnection(con);
 			return true;

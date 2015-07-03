@@ -23,7 +23,7 @@ public class AktieDAO extends MyTradeDAO {
 	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 	private Map<String, Object> sessionMap = externalContext.getSessionMap();
 
-	public boolean addAktie(Aktie aktie) {
+	public synchronized boolean addAktie(Aktie aktie) {
 		try {
 
 			String aktienName = aktie.getName();
@@ -100,7 +100,7 @@ public class AktieDAO extends MyTradeDAO {
 		}
 	}
 
-	private int checkIfStockTypeAlreadyExists(String symbol) {
+	private synchronized int checkIfStockTypeAlreadyExists(String symbol) {
 
 		int stockID = 0;
 		con = getConnection();
@@ -230,7 +230,7 @@ public class AktieDAO extends MyTradeDAO {
 		}
 	}
 	
-	public int selectAnzahlAktienDesBenutzers(int aktienID) {
+	public synchronized int selectAnzahlAktienDesBenutzers(int aktienID) {
 		
 		int anzahlAktien = 0;
 		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
@@ -260,7 +260,7 @@ public class AktieDAO extends MyTradeDAO {
 		}
 	}
 	
-	public ArrayList<Aktie> selectAlleAktien() {
+	public synchronized ArrayList<Aktie> selectAlleAktien() {
 		
 		ArrayList<Aktie> alleAktien = new ArrayList<Aktie>();
 		
@@ -293,7 +293,7 @@ public class AktieDAO extends MyTradeDAO {
 		}
 	}
 
-	public boolean dividendeAktualisieren(int neueDividende, int aktieID) {
+	public synchronized boolean dividendeAktualisieren(int neueDividende, int aktieID) {
 		
 		try {
 			con = getConnection();
