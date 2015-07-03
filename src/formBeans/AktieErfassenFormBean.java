@@ -59,7 +59,11 @@ public String save() {
 			
 			neuesAuftragDAO.auftragErfassen(neuesAktienDAO.checkIfStockTypeAlreadyExists(symbol), stueck, preis, 2);
 			
-			
+			name      = "";
+			symbol    = "";
+			preis     = 0.0;
+			dividende = 0.0;
+			stueck    = 0;
 			return "administration?faces-redirect=true";
 		}else{
 			
