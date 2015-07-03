@@ -181,7 +181,8 @@ public class MyAuthFilter implements Filter {
 		return reqString.contains("administration.xhtml")
 				|| reqString.contains("aktieErfassen.xhtml")
 				|| reqString.contains("benutzerErfassen.xhtml")
-				|| reqString.contains("neueAktieVorschau.xhtml");
+				|| reqString.contains("neueAktieVorschau.xhtml")
+				|| reqString.contains("benutzerErfassenVorschau.xhtml");
 	}
 	
 	private boolean istKundenSeite(HttpServletRequest request) {

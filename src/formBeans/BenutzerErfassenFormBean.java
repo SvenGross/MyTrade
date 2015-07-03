@@ -23,12 +23,27 @@ public class BenutzerErfassenFormBean {
 	private String rolle;
 	private boolean administrator;
 	private double kontostand = 10000;
-	private boolean fehler;
+	private Benutzer benutzer;
 
-	public String save() {
+	public String vorschau() {
 
 		setAdministrator();
-		Benutzer benutzer = new Benutzer(name, vorname, login, passwort, administrator, kontostand);
+
+		benutzer = new Benutzer(name, vorname, login, passwort, administrator, kontostand);
+		
+		return "benutzerErfassenVorschau?faces-redirect=true";
+
+	}
+	
+
+	public String backToBenutzerErfassen(){
+		
+		return "benutzerErfassen?faces-redirect=true";
+		
+	}
+	
+	public String saveUser() {
+		
 		BenutzerDAO benutzerDAO = new BenutzerDAO();
 		if (benutzerDAO.addUser(benutzer)){
 			//gib message successful
@@ -36,15 +51,22 @@ public class BenutzerErfassenFormBean {
 			//nicht successful
 		}
 		
-
+		
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		
 		sessionMap.put(KonstantenSession.MELDUNG, Meldungen.BENUTZER_ANLEGEN);
 		
+		
 		return "administration?faces-redirect=true";
+		
+	}
 
+	public String backToAdministration() {
+		
+		return "administration?faces-redirect=true";
+		
 	}
 
 	public void setAdministrator(){
@@ -56,11 +78,6 @@ public class BenutzerErfassenFormBean {
 		}
 	}
 	
-	public String back() {
-		
-		return "administration?faces-redirect=true";
-		
-	}
 
 	public String getName() {
 		return name;
@@ -118,11 +135,11 @@ public class BenutzerErfassenFormBean {
 		this.kontostand = kontostand;
 	}
 	
-	public boolean isFehler() {
-		return fehler;
+	public Benutzer getBenutzer() {
+		return benutzer;
 	}
 	
-	public void setFehler(boolean fehler) {
-		this.fehler = fehler;
+	public void setBenutzer(Benutzer benutzer) {
+		this.benutzer = benutzer;
 	}
 }
