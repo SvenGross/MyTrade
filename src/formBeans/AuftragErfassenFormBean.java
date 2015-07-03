@@ -21,7 +21,6 @@ public class AuftragErfassenFormBean {
 	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 	private Map<String, Object> sessionMap = externalContext.getSessionMap();
 	private String formTitle = "";
-	private boolean fehler;
 
 	private boolean auftragVerkauf = false;
 	private Integer aktienID;
@@ -93,14 +92,6 @@ public class AuftragErfassenFormBean {
 
 	public void setFormTitle(String formTitle) {
 		this.formTitle = formTitle;
-	}
-
-	public boolean isFehler() {
-		return fehler;
-	}
-
-	public void setFehler(boolean fehler) {
-		this.fehler = fehler;
 	}
 
 	public boolean isAuftragVerkauf() {
