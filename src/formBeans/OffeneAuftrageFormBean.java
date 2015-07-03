@@ -19,13 +19,8 @@ import error.Meldungen;
 @SessionScoped
 public class OffeneAuftrageFormBean {
 
-	private Map<String, Object> sessionMap = null;
-	private boolean fehler;
-	
-	public OffeneAuftrageFormBean() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		sessionMap = externalContext.getSessionMap();
-	}
+	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	private Map<String, Object> sessionMap = externalContext.getSessionMap();
 
 	public String getKontostand() {
 		Benutzer benutzer = (Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER);
@@ -39,23 +34,7 @@ public class OffeneAuftrageFormBean {
 	
 	public void auftragStornieren(int auftragsID) {
 		AuftragDAO auftragDAO = new AuftragDAO();
-		if(!auftragDAO.auftragStornieren(auftragsID)) {
-			fehler = true;
-		}
-		
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		Map<String, Object> sessionMap = externalContext.getSessionMap();
-
-		sessionMap.put(KonstantenSession.MELDUNG,
-				Meldungen.AUFTRAG_STORNIEREN);
-	}
-	
-	public boolean isFehler() {
-		return fehler;
-	}
-	
-	public void setFehler(boolean fehler) {
-		this.fehler = fehler;
+		auftragDAO.auftragStornieren(auftragsID);
+		sessionMap.put(KonstantenSession.MELDUNG, Meldungen.AUFTRAG_STORNIEREN);
 	}
 }

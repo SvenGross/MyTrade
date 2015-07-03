@@ -156,7 +156,8 @@ public class AktieDAO extends MyTradeDAO {
 							+ "stock_data.last_dividend, COUNT(*) AS stock_count "
 							+ "FROM stock_data "
 							+ "INNER JOIN stock_pool ON stock_pool.stockFK = stock_data.stockID "
-							+ "WHERE stock_pool.ownerFK = '" + benutzerID + "' "
+							+ "WHERE stock_pool.ownerFK = '" + benutzerID + "' AND "
+							+ "stock_pool.orderFK IS NULL "
 							+ "GROUP BY stock_data.stockID");
 
 			while (rs.next()) {

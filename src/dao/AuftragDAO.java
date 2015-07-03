@@ -95,6 +95,68 @@ public class AuftragDAO extends MyTradeDAO {
 		
 		try {
 			con = getConnection();
+			
+			Statement stmt = con.createStatement();
+			stmt.execute("INSERT INTO orders (userFK, stockFK, quantity, price_per_share, typeFK) "
+					+ "VALUES('" + benutzerID + "', '" + aktienID + "', '" + anzahl + "', '" + preis + "', '" + type + "')");
+			stmt.close();
+			
+			if(type == 2) {
+				
+				Statement stmt2 = con.createStatement();
+				ResultSet rs2 = stmt2.executeQuery("SELECT orderID "
+						+ "FROM orders "
+						+ "WHERE userFK = '" + benutzerID + "' AND "
+						+ "stockFK = '" + aktienID + "' AND "
+						+ "quantity = '" + anzahl + "' AND "
+						+ "price_per_share = '" + preis + "' AND "
+						+ "typeFK = '" + type + "' "
+						+ "ORDER BY creation_date DESC");
+				
+				Integer orderID = null;
+				while (rs2.next()) {
+					orderID = rs2.getInt("orderID");
+				}
+				
+				rs2.close();
+				stmt2.close();
+				
+				Statement stmt3 = con.createStatement();
+				ResultSet rs3 = stmt3.executeQuery("SELECT stock_poolID "
+						+ "FROM stock_pool "
+						+ "WHERE orderFK IS NULL AND "
+						+ "stockFK = '" + aktienID + "' AND "
+						+ "ownerFK = '" + benutzerID + "' "
+						+ "ORDER BY price ASC "
+						+ "LIMIT " + anzahl);
+
+				while (rs3.next()) {
+					int stock_poolID = rs3.getInt("stock_poolID");
+					con.createStatement().executeUpdate("UPDATE stock_pool SET orderFK = '" + orderID + "' WHERE stock_poolID = '" + stock_poolID + "'");
+				}
+				
+				rs3.close();
+				stmt3.close();
+			}
+			
+			returnConnection(con);
+			return true;
+
+		} catch (Exception e) {
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'auftragErfassen' aufgetreten.");
+			e.printStackTrace();
+			returnConnection(con);
+			return false;
+		}
+	}
+	
+	public boolean auftraegeAusfuehren(int aktienID, int anzahl, double preis, int type) {
+		
+		//TODO
+		int benutzerID = ((Benutzer) sessionMap.get(KonstantenSession.ANGEMELDETER_BENUTZER)).getBenutzerIDAsInt();
+		
+		try {
+			con = getConnection();
 			stmt = con.createStatement();
 			
 			stmt.execute("INSERT INTO orders (userFK, stockFK, quantity, price_per_share, typeFK) "
@@ -104,7 +166,7 @@ public class AuftragDAO extends MyTradeDAO {
 			return true;
 
 		} catch (Exception e) {
-			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'auftragErfassen' aufgetreten.");
+			System.err.println("FEHLER:     dao.AktieDAO     Es ist ein Fehler in der Methode 'auftraegeAusfuehren' aufgetreten.");
 			e.printStackTrace();
 			returnConnection(con);
 			return false;
