@@ -9,6 +9,10 @@ import javax.faces.context.FacesContext;
 
 import model.KonstantenSession;
 
+/**
+ * @date 25.6.2015 - 3.7.2015
+ * @author sacha weiersmueller, siro duschletta und sven gross
+ */
 @ManagedBean
 @SessionScoped
 public class Meldungen {

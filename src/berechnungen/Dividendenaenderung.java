@@ -6,7 +6,6 @@ import java.util.Random;
  *  Verändere eine Dividende in gegebenem Intervall zufällig.
  *  @author Philipp Gressly Freimann(phi@gressly.eu)
  *  
- *  Datentyp von int nach double geändert durch Sacha Weiersmüller
  */
 /*
  * History: first Implementation: Dec 20, 2011
