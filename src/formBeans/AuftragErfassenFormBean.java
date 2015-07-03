@@ -12,6 +12,7 @@ import model.Aktie;
 import model.KonstantenSession;
 import dao.AktieDAO;
 import dao.AuftragDAO;
+import error.Meldungen;
 
 @ManagedBean
 @SessionScoped
@@ -66,6 +67,13 @@ public class AuftragErfassenFormBean {
 		else {
 			auftragDAO.auftragErfassen(aktienID, stueck, preis, 1);
 		}
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		Map<String, Object> sessionMap = externalContext.getSessionMap();
+
+		sessionMap.put(KonstantenSession.MELDUNG,
+				Meldungen.AUFTRAG_ERFASSEN);
 		
 		return "offeneAuftrage?faces-redirect=true";
 	}

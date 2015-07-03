@@ -26,6 +26,8 @@ public class Meldungen {
 	//TODO DONE: dividende ausschuetten
 //				 aktie erstellen
 //				benutzer anlegen
+//				auftrag stornieren
+//				auftrag erfassen
 	
 	
 	public Meldungen() {

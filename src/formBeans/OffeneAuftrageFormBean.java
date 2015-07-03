@@ -13,6 +13,7 @@ import model.Auftrag;
 import model.Benutzer;
 import model.KonstantenSession;
 import dao.AuftragDAO;
+import error.Meldungen;
 
 @ManagedBean
 @SessionScoped
@@ -41,6 +42,13 @@ public class OffeneAuftrageFormBean {
 		if(!auftragDAO.auftragStornieren(auftragsID)) {
 			fehler = true;
 		}
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		Map<String, Object> sessionMap = externalContext.getSessionMap();
+
+		sessionMap.put(KonstantenSession.MELDUNG,
+				Meldungen.AUFTRAG_STORNIEREN);
 	}
 	
 	public boolean isFehler() {
