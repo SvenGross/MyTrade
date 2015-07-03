@@ -97,7 +97,7 @@ public class AdministrationFormBean {
 				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 
-		sessionMap.put(KonstantenSession.FEHLER_MELDUNG,
+		sessionMap.put(KonstantenSession.MELDUNG,
 				Meldungen.DIVIDENDE_AUSSCHUETTEN);
 	}
 }

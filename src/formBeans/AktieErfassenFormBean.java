@@ -54,7 +54,7 @@ public class AktieErfassenFormBean {
 					.getExternalContext();
 			Map<String, Object> sessionMap = externalContext.getSessionMap();
 			
-			sessionMap.put(KonstantenSession.FEHLER_MELDUNG, Meldungen.AKTIE_ERSTELLEN);
+			sessionMap.put(KonstantenSession.MELDUNG, Meldungen.AKTIE_ERSTELLEN);
 			
 			return "administration?faces-redirect=true";
 		}else{

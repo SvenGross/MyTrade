@@ -29,12 +29,12 @@ public class Meldungen {
 	
 	
 	public Meldungen() {
-		sessionMap.put(KonstantenSession.FEHLER_MELDUNG, "");
+		sessionMap.put(KonstantenSession.MELDUNG, "");
 	}
 	public String printFehler() {
 		
-		String fehlerMeldung = (String) sessionMap.get(KonstantenSession.FEHLER_MELDUNG);
-		sessionMap.put(KonstantenSession.FEHLER_MELDUNG, "");
+		String fehlerMeldung = (String) sessionMap.get(KonstantenSession.MELDUNG);
+		sessionMap.put(KonstantenSession.MELDUNG, "");
 		return fehlerMeldung;
 	}
 }

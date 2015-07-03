@@ -41,7 +41,7 @@ public class BenutzerErfassenFormBean {
 				.getExternalContext();
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		
-		sessionMap.put(KonstantenSession.FEHLER_MELDUNG, Meldungen.BENUTZER_ANLEGEN);
+		sessionMap.put(KonstantenSession.MELDUNG, Meldungen.BENUTZER_ANLEGEN);
 		
 		return "administration?faces-redirect=true";
 
