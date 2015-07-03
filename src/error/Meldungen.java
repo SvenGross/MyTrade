@@ -19,7 +19,6 @@ public class Meldungen {
 	public static String AKTIE_ERSTELLEN        = "Die Aktie wurde erfolgreich gespeichert: ";
 	public static String DIVIDENDE_AUSSCHUETTEN = "Die Dividende wurde erfolgreich ausgeschüttet.";
 	public static String BENUTZER_ANLEGEN       = "Der Benutzer wurde erfolgreich angelegt: ";
-	public static String AUFTRAG_AUSFUEHREN     = "Der Auftrag wurde erfolgreich ausgeführt: ";
 	public static String AUFTRAG_ERFASSEN       = "Der Auftrag wurde erfolgreich erfasst: ";
 	public static String AUFTRAG_STORNIEREN     = "Der Auftrag wurde erfolgreich storniert: ";
 	
