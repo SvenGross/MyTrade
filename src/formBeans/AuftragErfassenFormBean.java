@@ -24,7 +24,7 @@ public class AuftragErfassenFormBean {
 	
 	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 	private Map<String, Object> sessionMap = externalContext.getSessionMap();
-	private String formTitle = "";
+	private String formTitle = ""; // Titel der im Facelet angezeigt wird ("Kauf" oder "Verkauf")
 
 	private boolean auftragVerkauf = false;
 	private Integer aktienID;

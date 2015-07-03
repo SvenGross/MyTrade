@@ -36,7 +36,6 @@ public class Benutzer {
 		this.passwort = passwort;
 		this.administrator = administrator;
 		this.kontostand = kontostand;
-		
 	}
 
 	public String getBenutzerID() {
@@ -105,5 +104,4 @@ public class Benutzer {
 	public void setKontostand(double kontostand) {
 		this.kontostand = kontostand;
 	}
-	
 }
