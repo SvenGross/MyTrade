@@ -23,6 +23,9 @@ public class AktieErfassenFormBean {
 	private int		stueck;
 	private Aktie 	neueAktie;
 	
+	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	private Map<String, Object> sessionMap = externalContext.getSessionMap();
+	
 	public String backToAdministration() {
 
 		return "administration?faces-redirect=true";
@@ -46,19 +49,11 @@ public class AktieErfassenFormBean {
 		
 		AktieDAO neuesAktienDAO = new AktieDAO();
 		if (neuesAktienDAO.addAktie(neueAktie)) {
-
-			//Meldung "Aktie erfasst" Hinzufügen!!!!!!
-
-			ExternalContext externalContext = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			Map<String, Object> sessionMap = externalContext.getSessionMap();
-			
-			sessionMap.put(KonstantenSession.MELDUNG, Meldungen.AKTIE_ERSTELLEN);
+			sessionMap.put(KonstantenSession.MELDUNG, Meldungen.AKTIE_ERSTELLEN + neueAktie.getName());
 			
 			return "administration?faces-redirect=true";
 		}else{
 			
-			//Meldung "Aktie konnte nicht erfasst werden oder so" Hinzufügen!!!!!!
 			return "aktieErfassen?faces-redirect=true";
 		}
 	}
