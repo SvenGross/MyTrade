@@ -62,7 +62,6 @@ public class BenutzerDAO extends MyTradeDAO {
 			returnConnection(con);
 			return null;
 		}
-
 	}
 
 	public synchronized boolean addUser(Benutzer benutzer) {
@@ -152,7 +151,6 @@ public class BenutzerDAO extends MyTradeDAO {
 			returnConnection(con);
 			return null;
 		}
-
 	}
 
 	public synchronized boolean benutzerHinzufuegen(Benutzer benutzer) {
@@ -230,7 +228,6 @@ public class BenutzerDAO extends MyTradeDAO {
 			returnConnection(con);
 			return null;
 		}
-
 	}
 
 	public synchronized double getKontostand(int userID) {
