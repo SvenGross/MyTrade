@@ -25,6 +25,9 @@ public class BenutzerErfassenFormBean {
 	private double kontostand = 10000;
 	private Benutzer benutzer;
 
+	private ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	private Map<String, Object> sessionMap = externalContext.getSessionMap();
+	
 	public String vorschau() {
 
 		setAdministrator();
@@ -45,19 +48,9 @@ public class BenutzerErfassenFormBean {
 	public String saveUser() {
 		
 		BenutzerDAO benutzerDAO = new BenutzerDAO();
-		if (benutzerDAO.addUser(benutzer)){
-			//gib message successful
-		} else{
-			//nicht successful
+		if (benutzerDAO.addUser(benutzer)){		
+			sessionMap.put(KonstantenSession.MELDUNG, Meldungen.BENUTZER_ANLEGEN + benutzer.getBenutzername());
 		}
-		
-		
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		Map<String, Object> sessionMap = externalContext.getSessionMap();
-		
-		sessionMap.put(KonstantenSession.MELDUNG, Meldungen.BENUTZER_ANLEGEN);
-		
 		
 		return "administration?faces-redirect=true";
 		

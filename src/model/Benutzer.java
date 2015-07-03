@@ -2,6 +2,10 @@ package model;
 
 import dao.BenutzerDAO;
 
+/**
+ * @date 25.6.2015 - 3.7.2015
+ * @author sacha weiersmueller, siro duschletta und sven gross
+ */
 public class Benutzer {
 
 	private String benutzerID = null;
@@ -12,7 +16,7 @@ public class Benutzer {
 	private boolean administrator;
 	private double kontostand;
 	
-	public Benutzer(String vorname, String nachname, String benutzername, String passwort, boolean administrator, double kontostand) {
+	public Benutzer(String nachname, String vorname, String benutzername, String passwort, boolean administrator, double kontostand) {
 		
 		this.vorname = vorname;
 		this.nachname = nachname;

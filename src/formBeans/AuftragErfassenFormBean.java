@@ -67,12 +67,8 @@ public class AuftragErfassenFormBean {
 			auftragDAO.auftragErfassen(aktienID, stueck, preis, 1);
 		}
 		
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		Map<String, Object> sessionMap = externalContext.getSessionMap();
-
 		sessionMap.put(KonstantenSession.MELDUNG,
-				Meldungen.AUFTRAG_ERFASSEN);
+				Meldungen.AUFTRAG_ERFASSEN + name);
 		
 		return "offeneAuftrage?faces-redirect=true";
 	}
