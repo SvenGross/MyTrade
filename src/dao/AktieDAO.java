@@ -100,7 +100,7 @@ public class AktieDAO extends MyTradeDAO {
 		}
 	}
 
-	private synchronized int checkIfStockTypeAlreadyExists(String symbol) {
+	public synchronized int checkIfStockTypeAlreadyExists(String symbol) {
 
 		int stockID = 0;
 		con = getConnection();

@@ -7,10 +7,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import dao.AktieDAO;
-import error.Meldungen;
 import model.Aktie;
 import model.KonstantenSession;
+import dao.AktieDAO;
+import dao.AuftragDAO;
+import error.Meldungen;
 
 /**
  * @date 25.6.2015 - 3.7.2015
@@ -49,11 +50,15 @@ public class AktieErfassenFormBean {
 		
 	}
 	
-	public String save() {
+public String save() {
 		
 		AktieDAO neuesAktienDAO = new AktieDAO();
+		AuftragDAO neuesAuftragDAO = new AuftragDAO();
 		if (neuesAktienDAO.addAktie(neueAktie)) {
 			sessionMap.put(KonstantenSession.MELDUNG, Meldungen.AKTIE_ERSTELLEN + neueAktie.getName());
+			
+			neuesAuftragDAO.auftragErfassen(neuesAktienDAO.checkIfStockTypeAlreadyExists(symbol), stueck, preis, 2);
+			
 			
 			return "administration?faces-redirect=true";
 		}else{
